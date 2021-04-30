@@ -64,7 +64,7 @@ app.post('/login', (req, res) => {
                 const token = jwt.sign({ _id: result[0].id }, "secret")
                 res.cookie('jwt', token, {
                     httpOnly: true,
-                    maxAge: 24 * 60 * 60 * 1000 //1 day
+                    maxAge: 1 * 5 * 60 * 1000 //1 day
                 })
                 console.log(result)
                 res.send(result);
