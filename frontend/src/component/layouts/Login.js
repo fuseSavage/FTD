@@ -31,7 +31,7 @@ export default function Login() {
         })
         window.location.reload(false);
     }
-
+    
     return (
         <div>
             <Card>

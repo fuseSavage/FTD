@@ -10,8 +10,8 @@ const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 
 
-export default function Flow() {
-
+export default function Flow(props) {
+    const { datalist } = props;
     const [selectdataList, setSelectdataList] = useState([]);
     const [EXP_ID, SetEXP_ID] = useState("");
 
@@ -23,9 +23,17 @@ export default function Flow() {
     // }
 
     const getSelect = () => {
-        Axios.get(`http://localhost:3001/select?EXP_ID=${EXP_ID}`).then((response) => {
-            setSelectdataList(response.data);
-        })
+        if (datalist) {
+            window.location.reload(false);
+            Axios.get(`http://localhost:3001/select?EXP_ID=${EXP_ID}`).then((response) => {
+                setSelectdataList(response.data);
+                console.log(datalist);
+            })
+        } else {
+            console.log("data NO NO");
+            window.location.reload(false);
+        }
+        
     }
     const DataSet = [
         {

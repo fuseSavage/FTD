@@ -79,7 +79,7 @@ function App(props) {
         // console.log(content.message)
         if (!content.message) {
           setDataList(content[0].name)
-          console.log(datalist)
+          // console.log(datalist)
         }
       }
     )();
@@ -146,7 +146,7 @@ function App(props) {
           <Switch>
             <Route path='/' exact component={Home}></Route>
             <Route path='/home' exact component={() => <Home datalist={datalist} />}></Route>
-            <Route path='/flow' exact component={Flow}></Route>
+            <Route path='/flow' exact component={() => <Flow datalist={datalist} />}></Route>
             <Route path='/chengai' exact component={FlowChengai}></Route>
             <Route path='/ro' exact component={FlowRO}></Route>
             <Route path='/skybolt' exact component={FlowROSkybolt}></Route>
