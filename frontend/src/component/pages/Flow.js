@@ -15,6 +15,12 @@ export default function Flow(props) {
     const [selectdataList, setSelectdataList] = useState([]);
     const [EXP_ID, SetEXP_ID] = useState("");
 
+    
+
+
+
+    // const [name, setName] = useState([]);
+
     // const getSelect = () => {
     //     Axios.get('http://localhost:3001/select').then((response) => {
     //         setSelectdataList(response.data)
@@ -24,16 +30,15 @@ export default function Flow(props) {
 
     const getSelect = () => {
         if (datalist) {
-            window.location.reload(false);
             Axios.get(`http://localhost:3001/select?EXP_ID=${EXP_ID}`).then((response) => {
                 setSelectdataList(response.data);
+                // setName(response.data)
                 console.log(datalist);
             })
         } else {
             console.log("data NO NO");
             window.location.reload(false);
         }
-        
     }
     const DataSet = [
         {
@@ -57,6 +62,14 @@ export default function Flow(props) {
             ])
         }
     ]
+
+
+    const insertData = () => {
+        Axios.post(`http://localhost:3001/pushflow`, {
+            data: selectdataList
+        })
+        window.location.reload(false);
+    }
 
     return (
 
@@ -106,9 +119,9 @@ export default function Flow(props) {
                                     <th>WAF_EXP_CODE</th>
                                     <th>WAF_CODE</th>
                                 </thead>
-                                {selectdataList.map((val, key=0) => {
+                                {selectdataList.map((val) => {
                                     return (
-                                        <tbody>
+                                        <tbody key={val.SLD_BO_ID}>
                                             <tr>
                                                 <td>{val.EXP_ID}</td>
                                                 <td>{val.BLD_INTENT_AUTHOR}</td>
@@ -129,6 +142,8 @@ export default function Flow(props) {
                             >
                                 <ExcelSheet dataSet={DataSet} name="FTD Automated Buildflow" />
                             </ExcelFile>
+                            <Button variant="outline-warning" onClick={insertData}>Insert Data</Button>
+
                         </Col>
                         <Col></Col>
                     </Row>

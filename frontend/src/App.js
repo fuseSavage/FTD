@@ -15,6 +15,7 @@ import { AppBar, IconButton, Toolbar, Typography, Drawer, Hidden } from '@materi
 import { Button } from 'react-bootstrap';
 import { BiMenu } from 'react-icons/bi'
 import CssBaseline from '@material-ui/core/CssBaseline';
+import DataFlow from './component/history/DataFlow';
 
 
 const drawerWidth = 240;
@@ -110,6 +111,7 @@ function App(props) {
           </Toolbar>
         </AppBar>
 
+
         <nav className={classes.drawer} aria-label="mailbox folders">
           <Hidden smUp implementation="css">
             <Drawer
@@ -141,8 +143,10 @@ function App(props) {
           </Hidden>
         </nav>
         {/* <Login /> */}
+
         <main className={classes.content}>
           <div className={classes.toolbar} />
+
           <Switch>
             <Route path='/' exact component={Home}></Route>
             <Route path='/home' exact component={() => <Home datalist={datalist} />}></Route>
@@ -150,6 +154,7 @@ function App(props) {
             <Route path='/chengai' exact component={FlowChengai}></Route>
             <Route path='/ro' exact component={FlowRO}></Route>
             <Route path='/skybolt' exact component={FlowROSkybolt}></Route>
+            <Route path='/dataflow' exact component={DataFlow}></Route>
           </Switch>
           <Footer />
         </main>

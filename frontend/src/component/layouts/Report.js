@@ -5,7 +5,8 @@ import ListItem from '@material-ui/core/ListItem';
 // import { Button } from 'react-bootstrap';
 import Logout from './Logout';
 import { IoCreateSharp } from 'react-icons/io5';
-import { RiFileList3Fill } from 'react-icons/ri';
+import { RiFileList3Fill, RiFileHistoryFill } from 'react-icons/ri';
+import { BiHistory } from 'react-icons/bi';
 
 export default function Report() {
 
@@ -27,6 +28,24 @@ export default function Report() {
                 </ListItem>
                 <ListItem button component="a" href="/skybolt">
                     <IoCreateSharp size={20} /><a>Create Build Flow RO Skybolt</a>
+                </ListItem>
+            </List>
+            <Divider />
+            <List>
+                <ListItem>
+                    <RiFileHistoryFill size={20} /><strong> History </strong>
+                </ListItem>
+                <ListItem button component="a" href="/dataflow">
+                    <BiHistory size={20} /> <a>Build Flow</a>
+                </ListItem>
+                <ListItem button component="a" href="/chengai">
+                    <BiHistory size={20} /> <a>Build Flow Chengai</a>
+                </ListItem>
+                <ListItem button component="a" href="/ro">
+                    <BiHistory size={20} /><a>Build Flow RO</a>
+                </ListItem>
+                <ListItem button component="a" href="/skybolt">
+                    <BiHistory size={20} /><a>Build Flow RO Skybolt</a>
                 </ListItem>
             </List>
             <Divider />

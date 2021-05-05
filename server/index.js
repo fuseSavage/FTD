@@ -28,6 +28,13 @@ const dblogin = mysql.createConnection({
     database: "employees"
 });
 
+const dataflow = mysql.createConnection({
+    user: "root",
+    host: "localhost",
+    password: "root11549",
+    database: "insertdata"
+})
+
 app.get('/demoauto', (req, res) => {
     db.query("SELECT * FROM sql_for_auto_web_07113", (err, result) => {
         if (err) {
@@ -41,7 +48,7 @@ app.get('/demoauto', (req, res) => {
 app.get('/select', (req, res) => {
     const exp_id = req.query.EXP_ID;
     // console.log(exp_id)
-    db.query(`SELECT EXP_ID,HGA_QTY,BLD_INTENT_AUTHOR,BLD_INTENT_TEAM,WAF_EXP_CODE_DESCR,WAF_EXP_CODE,WAF_CODE FROM sql_for_auto_web_07113 WHERE EXP_ID = "${exp_id}"`,
+    db.query(`SELECT EXP_ID,HGA_QTY,BLD_INTENT_AUTHOR,BLD_INTENT_TEAM,SLD_BO_ID,WAF_EXP_CODE_DESCR,WAF_EXP_CODE,WAF_CODE FROM sql_for_auto_web_07113 WHERE EXP_ID = "${exp_id}"`,
         (err, result) => {
             if (err) {
                 console.log(err);
@@ -50,6 +57,43 @@ app.get('/select', (req, res) => {
             }
         })
 })
+
+app.get('/dataflow', (req, res) => {
+    dataflow.query(`SELECT * FROM dataflow`,
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send(result);
+            }
+        })
+})
+
+app.post('/pushflow', (req, res) => {
+    const data = req.body.data;
+    console.log(data.length)
+    for (let i = 0; i < data.length; i++) {
+        const expid = req.body.data[i].EXP_ID;
+        const author = req.body.data[i].BLD_INTENT_AUTHOR;
+        const team = req.body.data[i].BLD_INTENT_TEAM;
+        const qty = req.body.data[i].HGA_QTY;
+        const descr = req.body.data[i].WAF_EXP_CODE_DESCR;
+        const code = req.body.data[i].WAF_EXP_CODE	;
+        const wafcode = req.body.data[i].WAF_CODE;
+        // console.log(expid, author)
+        dataflow.query(`INSERT INTO dataflow (EXP_ID, BLD_INTENT_AUTHOR, BLD_INTENT_TEAM, HGA_QTY, WAF_EXP_CODE_DESCR, WAF_EXP_CODE, WAF_CODE) VALUES(?,?,?,?,?,?,?)`,
+        [expid, author, team, qty, descr, code, wafcode],
+        (err, res) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send('INSERT VALUES COMPLETE')
+            }
+        })
+    }
+      
+})
+
 // AND password = "${password}"
 
 app.post('/login', (req, res) => {
