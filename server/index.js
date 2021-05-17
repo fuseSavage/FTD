@@ -21,6 +21,13 @@ const db = mysql.createConnection({
     database: "demoautodb",
 });
 
+const db2 = mysql.createConnection({
+    user: "root",
+    host: "localhost",
+    password: "root11549",
+    database: "flowdb",
+});
+
 const dblogin = mysql.createConnection({
     user: "root",
     host: "localhost",
@@ -48,7 +55,7 @@ app.get('/demoauto', (req, res) => {
 app.get('/select', (req, res) => {
     const exp_id = req.query.EXP_ID;
     // console.log(exp_id)
-    db.query(`SELECT EXP_ID,HGA_QTY,BLD_INTENT_AUTHOR,BLD_INTENT_TEAM,SLD_BO_ID,WAF_EXP_CODE_DESCR,WAF_EXP_CODE,WAF_CODE FROM sql_for_auto_web_07113 WHERE EXP_ID = "${exp_id}"`,
+    db2.query(`SELECT EXP_ID,HGA_QTY,BLD_INTENT_AUTHOR,BLD_INTENT_TEAM,SLD_BO_ID,WAF_EXP_CODE_DESCR,WAF_EXP_CODE,WAF_CODE FROM dataflow1 WHERE EXP_ID = "${exp_id}"`,
         (err, result) => {
             if (err) {
                 console.log(err);
@@ -58,20 +65,23 @@ app.get('/select', (req, res) => {
         })
 })
 
-app.get('/dataflow', (req, res) => {
-    dataflow.query(`SELECT * FROM dataflow`,
+app.get('/dataflow',async (req, res) => {
+    await dataflow.query(`SELECT * FROM dataflow`,
         (err, result) => {
             if (err) {
                 console.log(err);
             } else {
                 res.send(result);
+                
             }
         })
 })
 
 app.post('/pushflow', (req, res) => {
     const data = req.body.data;
-    console.log(data.length)
+    const name = req.body.name;
+    
+    console.log(data)
     for (let i = 0; i < data.length; i++) {
         const expid = req.body.data[i].EXP_ID;
         const author = req.body.data[i].BLD_INTENT_AUTHOR;
@@ -87,10 +97,19 @@ app.post('/pushflow', (req, res) => {
             if (err) {
                 console.log(err);
             } else {
-                res.send('INSERT VALUES COMPLETE')
+                console.log('INSERT VALUES COMPLETE')
             }
         })
     }
+    // dataflow.query(`INSERT INTO dataflow3 (name, data) VALUES(?,?)`,
+    //     [name, jsondata],
+    //     (err, res) => {
+    //         if (err) {
+    //             console.log(err);
+    //         } else {
+    //             console.log('INSERT VALUES COMPLETE')
+    //         }
+    //     })
       
 })
 
@@ -108,7 +127,7 @@ app.post('/login', (req, res) => {
                 const token = jwt.sign({ _id: result[0].id }, "secret")
                 res.cookie('jwt', token, {
                     httpOnly: true,
-                    maxAge: 1 * 5 * 60 * 1000 //1 day
+                    maxAge: 24 * 60 * 60 * 1000 //1 day
                 })
                 console.log(result)
                 res.send(result);

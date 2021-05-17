@@ -15,19 +15,28 @@ export default function Report() {
             <Divider />
             <List>
                 <ListItem>
-                    <RiFileList3Fill size={20} /><strong> Report </strong>
+                    <RiFileList3Fill size={20} /><strong> Create Build Flow </strong>
                 </ListItem>
                 <ListItem button component="a" href="/flow">
-                    <IoCreateSharp size={20} /> <a>Create Build Flow</a>
+                    <IoCreateSharp size={20} /> <a>RDH RO</a>
                 </ListItem>
                 <ListItem button component="a" href="/chengai">
-                    <IoCreateSharp size={20} /> <a>Create Build Flow Chengai</a>
+                    <IoCreateSharp size={20} /> <a>RDH SDET Full Build</a>
                 </ListItem>
                 <ListItem button component="a" href="/ro">
-                    <IoCreateSharp size={20} /><a>Create Build Flow RO</a>
+                    <IoCreateSharp size={20} /><a>RDH HGA Full Build</a>
                 </ListItem>
                 <ListItem button component="a" href="/skybolt">
-                    <IoCreateSharp size={20} /><a>Create Build Flow RO Skybolt</a>
+                    <IoCreateSharp size={20} /><a>AMA L-Slider-SDET</a>
+                </ListItem>
+                <ListItem button component="a" href="/skybolt">
+                    <IoCreateSharp size={20} /><a>AMA L-Slider-HGA (no SDET)</a>
+                </ListItem>
+                <ListItem button component="a" href="/skybolt">
+                    <IoCreateSharp size={20} /><a>AMA SDET</a>
+                </ListItem>
+                <ListItem button component="a" href="/skybolt">
+                    <IoCreateSharp size={20} /><a>AMA HGA</a>
                 </ListItem>
             </List>
             <Divider />

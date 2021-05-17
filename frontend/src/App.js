@@ -154,7 +154,7 @@ function App(props) {
             <Route path='/chengai' exact component={FlowChengai}></Route>
             <Route path='/ro' exact component={FlowRO}></Route>
             <Route path='/skybolt' exact component={FlowROSkybolt}></Route>
-            <Route path='/dataflow' exact component={DataFlow}></Route>
+            <Route path='/dataflow' exact component={() => <DataFlow datalist={datalist} />}></Route>
           </Switch>
           <Footer />
         </main>

@@ -15,7 +15,7 @@ export default function Flow(props) {
     const [selectdataList, setSelectdataList] = useState([]);
     const [EXP_ID, SetEXP_ID] = useState("");
 
-    
+
 
 
 
@@ -32,8 +32,8 @@ export default function Flow(props) {
         if (datalist) {
             Axios.get(`http://localhost:3001/select?EXP_ID=${EXP_ID}`).then((response) => {
                 setSelectdataList(response.data);
-                // setName(response.data)
-                console.log(datalist);
+                console.log(response.data)
+                console.log(selectdataList.length);
             })
         } else {
             console.log("data NO NO");
@@ -66,7 +66,8 @@ export default function Flow(props) {
 
     const insertData = () => {
         Axios.post(`http://localhost:3001/pushflow`, {
-            data: selectdataList
+            data: selectdataList,
+            name: datalist
         })
         window.location.reload(false);
     }
@@ -136,13 +137,14 @@ export default function Flow(props) {
                                     )
                                 })}
                             </Table>
+                            <Button variant="outline-warning" style={{ marginTop: '20px' }} onClick={insertData}>Insert Data</Button>
                             <ExcelFile
                                 filename="Test-Auto"
                                 element={<button type='button' className='btn btn-success float-right' style={{ marginTop: '20px' }}>Export Data</button>}
                             >
                                 <ExcelSheet dataSet={DataSet} name="FTD Automated Buildflow" />
                             </ExcelFile>
-                            <Button variant="outline-warning" onClick={insertData}>Insert Data</Button>
+
 
                         </Col>
                         <Col></Col>
