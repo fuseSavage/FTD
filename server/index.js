@@ -55,7 +55,7 @@ app.get('/demoauto', (req, res) => {
 app.get('/select', (req, res) => {
     const exp_id = req.query.EXP_ID;
     // console.log(exp_id)
-    db2.query(`SELECT EXP_ID,HGA_QTY,BLD_INTENT_AUTHOR,BLD_INTENT_TEAM,SLD_BO_ID,WAF_EXP_CODE_DESCR,WAF_EXP_CODE,WAF_CODE FROM dataflow1 WHERE EXP_ID = "${exp_id}"`,
+    db.query(`SELECT * FROM data_etsa WHERE EXP_ID = "${exp_id}"`,
         (err, result) => {
             if (err) {
                 console.log(err);
@@ -80,17 +80,18 @@ app.get('/dataflow',async (req, res) => {
 app.post('/pushflow', (req, res) => {
     const data = req.body.data;
     const name = req.body.name;
-    
-    console.log(data)
+    // const listQty = req.body.listQty;
+    // console.log(listQty)
+    // console.log(data)
     for (let i = 0; i < data.length; i++) {
         const expid = req.body.data[i].EXP_ID;
         const author = req.body.data[i].BLD_INTENT_AUTHOR;
         const team = req.body.data[i].BLD_INTENT_TEAM;
-        const qty = req.body.data[i].HGA_QTY;
+        // const qty = req.body.listQty[i];
         const descr = req.body.data[i].WAF_EXP_CODE_DESCR;
         const code = req.body.data[i].WAF_EXP_CODE	;
         const wafcode = req.body.data[i].WAF_CODE;
-        // console.log(expid, author)
+        // console.log(qty, author)
         dataflow.query(`INSERT INTO dataflow (EXP_ID, BLD_INTENT_AUTHOR, BLD_INTENT_TEAM, HGA_QTY, WAF_EXP_CODE_DESCR, WAF_EXP_CODE, WAF_CODE) VALUES(?,?,?,?,?,?,?)`,
         [expid, author, team, qty, descr, code, wafcode],
         (err, res) => {

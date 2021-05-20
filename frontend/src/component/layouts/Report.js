@@ -15,46 +15,46 @@ export default function Report() {
             <Divider />
             <List>
                 <ListItem>
-                    <RiFileList3Fill size={20} /><strong> Create Build Flow </strong>
+                    <RiFileList3Fill size={20} /><strong style={{fontSize:'18px'}}> Create Build Flow </strong>
                 </ListItem>
-                <ListItem button component="a" href="/flow">
-                    <IoCreateSharp size={20} /> <a>RDH RO</a>
+                <ListItem button component="a" href="/rdhro">
+                    <IoCreateSharp size={17} /> <a style={{fontSize:'14px'}}>RDH RO</a>
                 </ListItem>
                 <ListItem button component="a" href="/chengai">
-                    <IoCreateSharp size={20} /> <a>RDH SDET Full Build</a>
+                    <IoCreateSharp size={17} /> <a style={{fontSize:'14px'}}>RDH SDET Full Build</a>
                 </ListItem>
                 <ListItem button component="a" href="/ro">
-                    <IoCreateSharp size={20} /><a>RDH HGA Full Build</a>
+                    <IoCreateSharp size={17} /><a style={{fontSize:'14px'}}>RDH HGA Full Build</a>
                 </ListItem>
                 <ListItem button component="a" href="/skybolt">
-                    <IoCreateSharp size={20} /><a>AMA L-Slider-SDET</a>
+                    <IoCreateSharp size={17} /><a style={{fontSize:'14px'}}>AMA L-Slider-SDET</a>
                 </ListItem>
                 <ListItem button component="a" href="/skybolt">
-                    <IoCreateSharp size={20} /><a>AMA L-Slider-HGA (no SDET)</a>
+                    <IoCreateSharp size={17} /><a style={{fontSize:'14px'}}>AMA L-Slider-HGA (no SDET)</a>
                 </ListItem>
                 <ListItem button component="a" href="/skybolt">
-                    <IoCreateSharp size={20} /><a>AMA SDET</a>
+                    <IoCreateSharp size={17} /><a style={{fontSize:'14px'}}>AMA SDET</a>
                 </ListItem>
                 <ListItem button component="a" href="/skybolt">
-                    <IoCreateSharp size={20} /><a>AMA HGA</a>
+                    <IoCreateSharp size={17} /><a style={{fontSize:'14px'}}>AMA HGA</a>
                 </ListItem>
             </List>
             <Divider />
             <List>
                 <ListItem>
-                    <RiFileHistoryFill size={20} /><strong> History </strong>
+                    <RiFileHistoryFill size={20} /><strong> Configurations </strong>
                 </ListItem>
                 <ListItem button component="a" href="/dataflow">
-                    <BiHistory size={20} /> <a>Build Flow</a>
+                    <BiHistory size={20} /> <a>Add Image Flow</a>
                 </ListItem>
                 <ListItem button component="a" href="/chengai">
-                    <BiHistory size={20} /> <a>Build Flow Chengai</a>
+                    <BiHistory size={20} /> <a>Alert Mail Setting</a>
                 </ListItem>
                 <ListItem button component="a" href="/ro">
-                    <BiHistory size={20} /><a>Build Flow RO</a>
+                    <BiHistory size={20} /><a>SW/FW Setting</a>
                 </ListItem>
                 <ListItem button component="a" href="/skybolt">
-                    <BiHistory size={20} /><a>Build Flow RO Skybolt</a>
+                    <BiHistory size={20} /><a>User Manager</a>
                 </ListItem>
             </List>
             <Divider />

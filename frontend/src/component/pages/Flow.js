@@ -14,8 +14,8 @@ export default function Flow(props) {
     const { datalist } = props;
     const [selectdataList, setSelectdataList] = useState([]);
     const [EXP_ID, SetEXP_ID] = useState("");
-
-
+    // const [qty, setQty] = useState([]);
+    // const listQty = [];
 
 
 
@@ -33,7 +33,6 @@ export default function Flow(props) {
             Axios.get(`http://localhost:3001/select?EXP_ID=${EXP_ID}`).then((response) => {
                 setSelectdataList(response.data);
                 console.log(response.data)
-                console.log(selectdataList.length);
             })
         } else {
             console.log("data NO NO");
@@ -67,8 +66,10 @@ export default function Flow(props) {
     const insertData = () => {
         Axios.post(`http://localhost:3001/pushflow`, {
             data: selectdataList,
-            name: datalist
+            name: datalist,
+            // listQty: listQty
         })
+        // console.log(listQty)
         window.location.reload(false);
     }
 
@@ -127,8 +128,11 @@ export default function Flow(props) {
                                                 <td>{val.EXP_ID}</td>
                                                 <td>{val.BLD_INTENT_AUTHOR}</td>
                                                 <td>{val.BLD_INTENT_TEAM}</td>
-                                                <td>{val.HGA_QTY}</td>
-                                                {/* <td><input type="number" name="name" style={{ width: '60px' }} /></td> */}
+                                                {/* <td>{val.HGA_QTY}</td> */}
+                                                <td><input type="input" name="name" onChange={(event) => {
+                                                    // setQty(event.target.value[0]);
+                                                    // listQty.push(event.target.value);
+                                                }} style={{ width: '60px' }} /></td>
                                                 <td>{val.WAF_EXP_CODE_DESCR}</td>
                                                 <td>{val.WAF_EXP_CODE}</td>
                                                 <td>{val.WAF_CODE}</td>
@@ -144,8 +148,6 @@ export default function Flow(props) {
                             >
                                 <ExcelSheet dataSet={DataSet} name="FTD Automated Buildflow" />
                             </ExcelFile>
-
-
                         </Col>
                         <Col></Col>
                     </Row>

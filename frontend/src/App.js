@@ -16,6 +16,7 @@ import { Button } from 'react-bootstrap';
 import { BiMenu } from 'react-icons/bi'
 import CssBaseline from '@material-ui/core/CssBaseline';
 import DataFlow from './component/history/DataFlow';
+import RDH_RO from './component/pages/RDH_RO';
 
 
 const drawerWidth = 240;
@@ -105,7 +106,7 @@ function App(props) {
             </IconButton>
             <Button variant="default" href="/home">
               <Typography variant="h6" style={{ color: 'white' }}>
-                FTD Automated Buildflow
+                RTH Automated Buildflow
               </Typography>
             </Button>
           </Toolbar>
@@ -155,6 +156,7 @@ function App(props) {
             <Route path='/ro' exact component={FlowRO}></Route>
             <Route path='/skybolt' exact component={FlowROSkybolt}></Route>
             <Route path='/dataflow' exact component={() => <DataFlow datalist={datalist} />}></Route>
+            <Route path='/rdhro' exact component={() => <RDH_RO datalist={datalist} />}></Route>
           </Switch>
           <Footer />
         </main>
