@@ -1,20 +1,13 @@
 import React, { useState } from 'react'
 import Axios from 'axios'
-// import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Card, Button, Col, Container, Form, Row, Table } from 'react-bootstrap'
 import ReactExport from 'react-data-export';
-// import Flow_RDH_RO from './Flow_RDH_RO';
-// import { makeStyles, useTheme } from '@material-ui/core/styles';
-// import App from '../../App';
-// import Flow_RDH_RO from './Flow_RDH_RO';
 import { Link } from 'react-router-dom';
+import { TiInputChecked } from 'react-icons/ti';
 
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
-
-
-
 
 export default function RDH_RO(props) {
     const { datalist } = props;
@@ -55,22 +48,10 @@ export default function RDH_RO(props) {
         }
     ]
 
-    // const insertData = () => {
-    //     Axios.post(`http://localhost:3001/pushflow`, {
-    //         data: selectdataList,
-    //         name: datalist
-    //     })
-    //     console.log('gg.gg', aa)
-    //     // window.location.reload(false);
-    // }
-
-
     const [type, setTYPE] = useState("PRIME BUILD");
     const handleSelectType = (e) => {
         setTYPE(e.target.value)
     }
-
-    // const [newTab, setNewTab] = useState([])
 
     const [persurface, setPersurface] = useState(500)
 
@@ -106,14 +87,36 @@ export default function RDH_RO(props) {
     const [newmedia, setNewmedia] = useState();
 
     //    const [wof, setWOF] = useState()
+    const [allQTY, setAllQTY] = useState([])
+    const [allWOF, setAllWOF] = useState([])
+    const handleInputAll = (event) => {
+        const valuesall = [...allQTY];
+        const defaultWOF = [...allWOF];
+        for (let i = 0; i < selectdataList.length; i++) {
+            valuesall[i] = event.target.value
+            defaultWOF[i] = "0";
+            setAllQTY(valuesall);
+            setAllWOF(defaultWOF);
+            // all.push(event.target.value)
+        }
+    }
+    const useClickQTY = () => {
+        setinputFieldQTY(allQTY)
+    }
+    const useClickWOF = () => {
+        setinputFieldWOF(allWOF);
+    }
 
-    const preview = (index) => {
+    const preview = () => {
         setNewmedia(media)
         setNewtestON(testON)
         setSW(swfw[0])
         setfw(swfw[1])
         setNewpersurface(persurface)
         setNewbuildType(type)
+        console.log('data', selectdataList)
+        console.log('all', allQTY)
+        console.log('datainput', datainput)
     }
     const datainput = [{
         qty: inputFieldQTY,
@@ -127,14 +130,7 @@ export default function RDH_RO(props) {
     }]
 
 
-
-    // const [allQTY, setAllQTY] = useState(0)
-    // const handleAllQTY = (event) => {
-
-    // }
-
     return (
-
         <div style={{ marginTop: '6%' }}>
             {selectdataList.length === 0 ? (
                 <Container>
@@ -161,7 +157,7 @@ export default function RDH_RO(props) {
                     </Col>
                     <Col></Col>
                 </Container>
-            ) : null }
+            ) : null}
 
             {selectdataList.length !== 0 ? (
                 <Container style={{ marginBottom: '20px', marginTop: '20px' }}>
@@ -201,13 +197,16 @@ export default function RDH_RO(props) {
                                 <th>SBR</th>
                                 <th>AABdesign</th>
                                 <th>Qty
-                                {/* <input type="number" onChange={event => {
-                                        setAllQTY(event.target.value)
-                                    }} style={{ width: '60px' }} /> */}
+                                <input type="number" onChange={event => {
+                                        handleInputAll(event)
+                                    }} style={{ width: '60px' }} />
+                                    <a type='button'><TiInputChecked size={20} onClick={useClickQTY} /></a>
                                 </th>
                                 <th>SEQ#/OldBO</th>
                                 <th>W/O</th>
-                                <th>WorkOrderFile</th>
+                                <th>WorkOrderFile
+                                    <a type='button' onClick={useClickWOF} ><TiInputChecked size={20} /><u>set 0</u></a>
+                                </th>
                                 <th>TMWI_ET</th>
                                 <th>Build_Num_ET</th>
                                 <th>SAAM TSR</th>
@@ -245,7 +244,7 @@ export default function RDH_RO(props) {
                                                         index,
                                                         event
                                                     );
-                                                    preview(index);
+
                                                 }} style={{ width: '60px' }} />.wo</td>
                                             <td>{val.BUILDGROUP}{val.HGA_BO.slice(3)}</td>
                                             <td>{val.HGA_BO}</td>
@@ -262,15 +261,6 @@ export default function RDH_RO(props) {
                                 )
                             })}
                         </Table>
-                        {/* <Button variant="outline-warning" style={{ marginTop: '20px' }} onClick={insertData}>Insert Data</Button> */}
-                        {/* <ExcelFile
-                                filename="Test-Auto"
-                                element={<button type='button' className='btn btn-success float-right' style={{ marginTop: '20px' }}>Export Data</button>}
-                            >
-                                <ExcelSheet dataSet={DataSet} name="FTD Automated Buildflow" />
-                            </ExcelFile> */}
-
-
                     </Col>
                     <div style={{ marginTop: '20px' }}>
                         <p>BUILD TYPE :
@@ -336,7 +326,7 @@ export default function RDH_RO(props) {
                 </Container>
             ) : null}
 
-            
+
 
         </div>
     )
