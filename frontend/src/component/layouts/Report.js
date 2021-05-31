@@ -20,10 +20,10 @@ export default function Report() {
                 <ListItem button component="a" href="/rdhro">
                     <IoCreateSharp size={17} /> <a style={{fontSize:'14px'}}>RDH RO</a>
                 </ListItem>
-                <ListItem button component="a" href="/chengai">
+                <ListItem button component="a" href="/rdhsdet">
                     <IoCreateSharp size={17} /> <a style={{fontSize:'14px'}}>RDH SDET Full Build</a>
                 </ListItem>
-                <ListItem button component="a" href="/ro">
+                <ListItem button component="a" href="/rdhhga">
                     <IoCreateSharp size={17} /><a style={{fontSize:'14px'}}>RDH HGA Full Build</a>
                 </ListItem>
                 <ListItem button component="a" href="/skybolt">

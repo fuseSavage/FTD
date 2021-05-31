@@ -1,64 +1,31 @@
 import React, { useState } from 'react'
 import Axios from 'axios'
+// import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Card, Button, Col, Container, Form, Row, Table } from 'react-bootstrap'
 import ReactExport from 'react-data-export';
+// import Flow_RDH_RO from './Flow_RDH_RO';
+// import { makeStyles, useTheme } from '@material-ui/core/styles';
+// import App from '../../App';
+// import Flow_RDH_RO from './Flow_RDH_RO';
+import { Link } from 'react-router-dom';
 
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 
-const rowStyle = { backgroundColor: '#c8e6c9', border: '3px solid red' };
+
+
 
 export default function RDH_RO(props) {
     const { datalist } = props;
     const [selectdataList, setSelectdataList] = useState([]);
     const [EXP_ID, SetEXP_ID] = useState("");
-    const [aa, setAA] = useState([])
 
-    const [type, setTYPE] = useState("PRIME BUILD");
-    const handleSelectType = (e) => {
-        setTYPE(e.target.value)
-    }
-
-    const [newTab, setNewTab] = useState('')
-
-    const [persurface, setPersurface] = useState(500)
-
-
-    const [swfw, setSWFW] = useState(["4.51B213", "SHF 1.6.1.246"])
-    const [newswfw, setNewSWFW] = useState('')
-    const handleSelectSWFW = (e) => {
-        setSWFW((e.target.value).split("/"))
-        setNewSWFW(e.target.value)
-    }
-
-    const [testON, setTestON] = useState('')
-
-    const [media, setMedia] = useState()
-
-    // const [zz, setZZ] = useState([])
-    const listQty = [];
 
     const getSelect = () => {
         if (datalist) {
             Axios.get(`http://localhost:3001/select?EXP_ID=${EXP_ID}`).then((response) => {
                 setSelectdataList(response.data);
-                
-                // for (let i = 0; i < selectdataList.length; i++) {
-                //     if (selectdataList[i] = 'Down-00') {
-                //         setNewTab('Dn');
-                //         console.log('aa',newTab)
-                //     } else {
-                //         setNewTab('Up');
-                //     }
-                // }
-                // console.log(selectdataList.length);
-                // if (val.PARM_HGA_TAB === 'Down-00') {
-                //     setNewTab('Dn');
-                // }
-                // if (val.PARM_HGA_TAB === 'Up-01') {
-                //     setNewTab('Up');
-                // }
             })
         } else {
             console.log("data NO NO");
@@ -88,49 +55,116 @@ export default function RDH_RO(props) {
         }
     ]
 
-    const insertData = () => {
-        Axios.post(`http://localhost:3001/pushflow`, {
-            data: selectdataList,
-            name: datalist
-        })
-        console.log('gg.gg', aa)
-        // window.location.reload(false);
+    // const insertData = () => {
+    //     Axios.post(`http://localhost:3001/pushflow`, {
+    //         data: selectdataList,
+    //         name: datalist
+    //     })
+    //     console.log('gg.gg', aa)
+    //     // window.location.reload(false);
+    // }
+
+
+    const [type, setTYPE] = useState("PRIME BUILD");
+    const handleSelectType = (e) => {
+        setTYPE(e.target.value)
     }
+
+    // const [newTab, setNewTab] = useState([])
+
+    const [persurface, setPersurface] = useState(500)
+
+
+    const [swfw, setSWFW] = useState(["4.51B213", "SHF 1.6.1.246"])
+    const [newswfw, setNewSWFW] = useState('')
+    const handleSelectSWFW = (e) => {
+        setSWFW((e.target.value).split("/"))
+        setNewSWFW(e.target.value)
+    }
+
+    const [testON, setTestON] = useState('')
+
+    const [media, setMedia] = useState()
+
+    const [inputFieldQTY, setinputFieldQTY] = useState([])
+    const handleInputQTY = (index, event) => {
+        const valuesqty = [...inputFieldQTY];
+        valuesqty[index] = event.target.value;
+        setinputFieldQTY(valuesqty);
+    };
+    const [inputFieldWOF, setinputFieldWOF] = useState([])
+    const handleInputWOF = (index, event) => {
+        const valueswof = [...inputFieldWOF];
+        valueswof[index] = event.target.value;
+        setinputFieldWOF(valueswof);
+    };
+    const [newbuildType, setNewbuildType] = useState();
+    const [newpersurface, setNewpersurface] = useState();
+    const [sw, setSW] = useState();
+    const [fw, setfw] = useState();
+    const [newtestON, setNewtestON] = useState();
+    const [newmedia, setNewmedia] = useState();
+
+    //    const [wof, setWOF] = useState()
+
+    const preview = (index) => {
+        setNewmedia(media)
+        setNewtestON(testON)
+        setSW(swfw[0])
+        setfw(swfw[1])
+        setNewpersurface(persurface)
+        setNewbuildType(type)
+    }
+    const datainput = [{
+        qty: inputFieldQTY,
+        wof: inputFieldWOF,
+        buildType: type,
+        persurface: persurface,
+        sw: swfw[0],
+        fw: swfw[1],
+        testON: testON,
+        media: media,
+    }]
+
+
+
+    // const [allQTY, setAllQTY] = useState(0)
+    // const handleAllQTY = (event) => {
+
+    // }
 
     return (
 
         <div style={{ marginTop: '6%' }}>
-            <Row>
-                <Col></Col>
-                <Col md={11}><h3>Create Build Flow RTH RO</h3></Col>
-                <Col></Col>
-            </Row>
-            <Row>
-                <Col></Col>
-                <Col>
-                    <Card style={{ width: '18rem', marginTop: '1%' }}>
-                        <Card.Header style={{ backgroundColor: '#c6ff00', fontWeight: 'bold' }}>No BIN.</Card.Header>
-                        <Card.Body>
-                            <Form>
-                                <Form.Group>
-                                    <Form.Control
-                                        type="text"
-                                        placeholder="Enter No BIN."
-                                        onChange={(event) => {
-                                            SetEXP_ID(event.target.value);
-                                        }}
-                                    />
-                                </Form.Group>
-                            </Form>
-                        </Card.Body>
-                        <Button variant="outline-success" onClick={getSelect}>Success</Button>
-                    </Card>
-                </Col>
-                <Col></Col>
-            </Row>
+            {selectdataList.length === 0 ? (
+                <Container>
+                    <h3>Create Build Flow RDH RO</h3>
+                    <Col></Col>
+                    <Col md={10}>
+                        <Card style={{ width: '18rem', marginTop: '1%' }}>
+                            <Card.Header style={{ backgroundColor: '#c6ff00', fontWeight: 'bold' }}>No BIN.</Card.Header>
+                            <Card.Body>
+                                <Form>
+                                    <Form.Group>
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="Enter No BIN."
+                                            onChange={(event) => {
+                                                SetEXP_ID(event.target.value);
+                                            }}
+                                        />
+                                    </Form.Group>
+                                </Form>
+                            </Card.Body>
+                            <Button variant="outline-success" onClick={getSelect}>Success</Button>
+                        </Card>
+                    </Col>
+                    <Col></Col>
+                </Container>
+            ) : null }
 
             {selectdataList.length !== 0 ? (
-                <Container style={{ marginBottom: '5%', marginTop: '5%' }}>
+                <Container style={{ marginBottom: '20px', marginTop: '20px' }}>
 
                     <Col sm={12}>
                         <Table responsive hover style={{ width: '280px', border: '2px solid black' }}>
@@ -157,8 +191,8 @@ export default function RDH_RO(props) {
 
                         </Table>
 
-                        <Table responsive hover bordered>
-                            <thead style={{ backgroundColor: 'yellow' }}>
+                        <Table hover bordered>
+                            <thead style={{ backgroundColor: '#8ED1FC' }}>
                                 <th>No.</th>
                                 <th>BIN</th>
                                 <th>PREFIX</th>
@@ -166,7 +200,11 @@ export default function RDH_RO(props) {
                                 <th>TAB</th>
                                 <th>SBR</th>
                                 <th>AABdesign</th>
-                                <th>Qty</th>
+                                <th>Qty
+                                {/* <input type="number" onChange={event => {
+                                        setAllQTY(event.target.value)
+                                    }} style={{ width: '60px' }} /> */}
+                                </th>
                                 <th>SEQ#/OldBO</th>
                                 <th>W/O</th>
                                 <th>WorkOrderFile</th>
@@ -182,35 +220,43 @@ export default function RDH_RO(props) {
                                 <th> WAFER_INFO</th>
                             </thead>
                             {selectdataList.map((val, index) => {
-                              
                                 return (
                                     <tbody>
                                         <tr>
                                             <td>{index + 1}</td>
                                             <td>{val.EXP_ID}</td>
                                             <td>{val.BUILDGROUP}</td>
-                                            <td>หาไม่เจอ</td>
-                                            <td>{newTab}</td>
+                                            <td>{val.SLC_PRIORITY}</td>
+                                            <td>{val.PARM_HGA_TAB}</td>
                                             <td>{val.HGA_BO}</td>
                                             <td>{val.AIRBEARINGDESIGN}</td>
-                                            <td><input type="number" onChange={(event) => {
-                                                // listQty.push(event.target.value);
-                                                // const ll = []
-                                                setAA(event.target.value);
+                                            <td><input type="number" value={inputFieldQTY[index]} onChange={event => {
+                                                handleInputQTY(
+                                                    index,
+                                                    event
+                                                );
+
                                             }} style={{ width: '60px' }} /></td>
                                             <td>{val.SLD_BO}</td>
                                             <td>{val.BUILDGROUP}{val.HGA_BO.slice(3)}{val.PARM_HGA_TAB[0]}</td>
-                                            <td>{val.BUILDGROUP}{val.HGA_BO.slice(3)}{val.PARM_HGA_TAB[0]}-<input type="number" style={{ width: '50px' }} />.wo</td>
+                                            <td>{val.BUILDGROUP}{val.HGA_BO.slice(3)}{val.PARM_HGA_TAB[0]}-
+                                            <input type="number" value={inputFieldWOF[index]} onChange={event => {
+                                                    handleInputWOF(
+                                                        index,
+                                                        event
+                                                    );
+                                                    preview(index);
+                                                }} style={{ width: '60px' }} />.wo</td>
                                             <td>{val.BUILDGROUP}{val.HGA_BO.slice(3)}</td>
                                             <td>{val.HGA_BO}</td>
                                             <td>{val.TSR_PN_G_SAAM}</td>
-                                            <td>{val.CL_TSR_PN_I_ELECTRIC1}</td>
-                                            <td>รอ</td>
-                                            <td>รอ</td>
-                                            <td>รอ</td>
-                                            <td>รอ</td>
-                                            <td>{val.THREE_DIGIT_WAF_CODE}</td>
-                                            <td>รอ</td>
+                                            <td>Column?</td>
+                                            <td>{newmedia}</td>
+                                            <td>{newtestON}</td>
+                                            <td>{sw}</td>
+                                            <td>{fw}</td>
+                                            <td>{val.THREE_DIGIT_WAFER_CODE}</td>
+                                            <td>-</td>
                                         </tr>
                                     </tbody>
                                 )
@@ -226,16 +272,6 @@ export default function RDH_RO(props) {
 
 
                     </Col>
-                    {/* <div className="App container">
-                        <Form.Group>
-                            <Form.Control size="sm" as="select">
-                                <option>Small 1</option>
-                                <option>Small 2</option>
-                                <option>Small 3</option>
-                            </Form.Control>
-                        </Form.Group>
-                    </div> */}
-
                     <div style={{ marginTop: '20px' }}>
                         <p>BUILD TYPE :
                         <select value={type} onChange={handleSelectType} >
@@ -285,11 +321,23 @@ export default function RDH_RO(props) {
                         <p style={{ marginLeft: '10px' }}><strong> ปล. 80% ของ surf. สามารถดูได้จากตัวเลขจำนวน tray ที่ row > Minimum BOLA tray require / surface</strong></p>
                         <p style={{ marginLeft: '10px' }}>5) หลังจาก test เสร็จ ค่อย ทำการ Sort งานในแต่ล่ะ BOs และ complete แต่ละ BOs ที่ Label print (Completed HOLD)</p>
                     </div>
-                    <p><strong> Result is </strong>{type}{' '}{persurface}{' '}{swfw}{' '}{testON}{' '}{media}</p>
+                    <p><strong> Result is </strong>{type}{' '}{persurface}{' '}{swfw}{' '}{testON}{' '}{media}{' '}{inputFieldQTY}{' '}{inputFieldWOF}</p>
 
 
+                    <Button variant="outline-warning" onClick={preview} style={{ marginTop: '20px' }}  >preview</Button>
+
+                    <Link
+                        type='button'
+                        to={{
+                            pathname: "/flowro",
+                            state: { datainput: datainput, dataselect: selectdataList } // your data array of objects
+                        }}
+                    ><Button variant="outline-warning" style={{ marginTop: '20px' }}>Test</Button></Link>
                 </Container>
             ) : null}
+
+            
+
         </div>
     )
 }

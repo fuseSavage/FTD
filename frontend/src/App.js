@@ -17,6 +17,9 @@ import { BiMenu } from 'react-icons/bi'
 import CssBaseline from '@material-ui/core/CssBaseline';
 import DataFlow from './component/history/DataFlow';
 import RDH_RO from './component/pages/RDH_RO';
+import Flow_RDH_RO from './component/pages/Flow_RDH_RO';
+import RDH_SDET from './component/pages/RDH_SDET';
+import RDH_HGA from './component/pages/RDH_HGA';
 
 
 const drawerWidth = 240;
@@ -58,6 +61,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function App(props) {
+  const { datainput } = props;
   const { window } = props;
   const classes = useStyles();
   const theme = useTheme();
@@ -157,6 +161,9 @@ function App(props) {
             <Route path='/skybolt' exact component={FlowROSkybolt}></Route>
             <Route path='/dataflow' exact component={() => <DataFlow datalist={datalist} />}></Route>
             <Route path='/rdhro' exact component={() => <RDH_RO datalist={datalist} />}></Route>
+            <Route path='/rdhsdet' exact component={() => <RDH_SDET datalist={datalist}/>}></Route>
+            <Route path='/rdhhga' exact component={() => <RDH_HGA datalist={datalist}/>}></Route>
+            <Route path='/flowro' exact component={() => <Flow_RDH_RO  />}></Route>
           </Switch>
           <Footer />
         </main>
