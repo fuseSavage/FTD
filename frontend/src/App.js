@@ -21,7 +21,6 @@ import Flow_RDH_RO from './component/pages/Flow_RDH_RO';
 import RDH_SDET from './component/pages/RDH_SDET';
 import RDH_HGA from './component/pages/RDH_HGA';
 
-
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -93,83 +92,83 @@ function App(props) {
 
   const container = window !== undefined ? () => window().document.body : undefined;
 
-  return (
-    <Router>
-      <div className={classes.root}>
-        <CssBaseline />
-        <AppBar position="fixed" className={classes.appBar}>
-          <Toolbar>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="start"
-              onClick={handleDrawerToggle}
-              className={classes.menuButton}
-            >
-              <BiMenu />
-            </IconButton>
-            <Button variant="default" href="/home">
-              <Typography variant="h6" style={{ color: 'white' }}>
-                RTH Automated Buildflow
+return (
+  <Router>
+    <div className={classes.root}>
+      <CssBaseline />
+      <AppBar position="fixed" className={classes.appBar}>
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            className={classes.menuButton}
+          >
+            <BiMenu />
+          </IconButton>
+          <Button variant="default" href="/home">
+            <Typography variant="h6" style={{ color: 'white' }}>
+              RTH Automated Buildflow
               </Typography>
-            </Button>
-          </Toolbar>
-        </AppBar>
+          </Button>
+        </Toolbar>
+      </AppBar>
 
 
-        <nav className={classes.drawer} aria-label="mailbox folders">
-          <Hidden smUp implementation="css">
-            <Drawer
-              container={container}
-              variant="temporary"
-              anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-              open={mobileOpen}
-              onClose={handleDrawerToggle}
-              classes={{
-                paper: classes.drawerPaper,
-              }}
-              ModalProps={{
-                keepMounted: true, // Better open performance on mobile.
-              }}
-            >
-              <Drawers datalist={datalist} />
-            </Drawer>
-          </Hidden>
-          <Hidden mdDown implementation="css">
-            <Drawer
-              classes={{
-                paper: classes.drawerPaper,
-              }}
-              variant="permanent"
-              open
-            >
-              <Drawers datalist={datalist} />
-            </Drawer>
-          </Hidden>
-        </nav>
-        {/* <Login /> */}
+      <nav className={classes.drawer} aria-label="mailbox folders">
+        <Hidden smUp implementation="css">
+          <Drawer
+            container={container}
+            variant="temporary"
+            anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+            open={mobileOpen}
+            onClose={handleDrawerToggle}
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+            ModalProps={{
+              keepMounted: true, // Better open performance on mobile.
+            }}
+          >
+            <Drawers datalist={datalist} />
+          </Drawer>
+        </Hidden>
+        <Hidden mdDown implementation="css">
+          <Drawer
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+            variant="permanent"
+            open
+          >
+            <Drawers datalist={datalist} />
+          </Drawer>
+        </Hidden>
+      </nav>
+      {/* <Login /> */}
 
-        <main className={classes.content}>
-          <div className={classes.toolbar} />
-
-          <Switch>
-            <Route path='/' exact component={Home}></Route>
-            <Route path='/home' exact component={() => <Home datalist={datalist} />}></Route>
-            <Route path='/flow' exact component={() => <Flow datalist={datalist} />}></Route>
-            <Route path='/chengai' exact component={FlowChengai}></Route>
-            <Route path='/ro' exact component={FlowRO}></Route>
-            <Route path='/skybolt' exact component={FlowROSkybolt}></Route>
-            <Route path='/dataflow' exact component={() => <DataFlow datalist={datalist} />}></Route>
-            <Route path='/rdhro' exact component={() => <RDH_RO datalist={datalist} />}></Route>
-            <Route path='/rdhsdet' exact component={() => <RDH_SDET datalist={datalist}/>}></Route>
-            <Route path='/rdhhga' exact component={() => <RDH_HGA datalist={datalist}/>}></Route>
-            <Route path='/flowro' exact component={() => <Flow_RDH_RO  />}></Route>
-          </Switch>
-          <Footer />
-        </main>
-      </div>
-    </Router>
-  );
+      <main className={classes.content}>
+        <div className={classes.toolbar} />
+        
+        <Switch>
+          <Route path='/' exact component={Home}></Route>
+          <Route path='/home' exact component={() => <Home datalist={datalist} />}></Route>
+          <Route path='/flow' exact component={() => <Flow datalist={datalist} />}></Route>
+          <Route path='/chengai' exact component={FlowChengai}></Route>
+          <Route path='/ro' exact component={FlowRO}></Route>
+          <Route path='/skybolt' exact component={FlowROSkybolt}></Route>
+          <Route path='/dataflow' exact component={() => <DataFlow datalist={datalist} />}></Route>
+          <Route path='/rdhro' exact component={() => <RDH_RO datalist={datalist} />}></Route>
+          <Route path='/rdhsdet' exact component={() => <RDH_SDET datalist={datalist} />}></Route>
+          <Route path='/rdhhga' exact component={() => <RDH_HGA datalist={datalist} />}></Route>
+          <Route path='/flowro' exact component={() => <Flow_RDH_RO />}></Route>
+        </Switch>
+        <Footer />
+      </main>
+    </div>
+  </Router>
+);
 }
 
 export default App;

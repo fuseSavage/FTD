@@ -1,20 +1,29 @@
 import React, { useState } from 'react'
 import Axios from 'axios'
-import { Card, Button, Col, Container, Form, Row, Table } from 'react-bootstrap'
+import { Card, Button, Col, Container, Form, Table } from 'react-bootstrap'
 import ReactExport from 'react-data-export';
 import { Link } from 'react-router-dom';
 import { TiInputChecked } from 'react-icons/ti';
 
 
+import Parser from 'html-react-parser';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
+
+
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+
+
 
 export default function RDH_RO(props) {
     const { datalist } = props;
     const [selectdataList, setSelectdataList] = useState([]);
     const [EXP_ID, SetEXP_ID] = useState("");
 
-
+    const [value, setValue] = useState('');
+    
     const getSelect = () => {
         if (datalist) {
             Axios.get(`http://localhost:3001/select?EXP_ID=${EXP_ID}`).then((response) => {
@@ -89,14 +98,24 @@ export default function RDH_RO(props) {
     //    const [wof, setWOF] = useState()
     const [allQTY, setAllQTY] = useState([])
     const [allWOF, setAllWOF] = useState([])
+    const [allWOF_0, setAllWOF_0] = useState([])
+
     const handleInputAll = (event) => {
         const valuesall = [...allQTY];
-        const defaultWOF = [...allWOF];
         for (let i = 0; i < selectdataList.length; i++) {
             valuesall[i] = event.target.value
-            defaultWOF[i] = "0";
             setAllQTY(valuesall);
-            setAllWOF(defaultWOF);
+            // all.push(event.target.value)
+        }
+    }
+    const handleInputAllWOF = (event) => {
+        const defaultWOF = [...allWOF_0];
+        const valuesall_WOF = [...allWOF];
+        for (let i = 0; i < selectdataList.length; i++) {
+            valuesall_WOF[i] = event.target.value
+            defaultWOF[i] = "0";
+            setAllWOF(valuesall_WOF)
+            setAllWOF_0(defaultWOF);
             // all.push(event.target.value)
         }
     }
@@ -106,6 +125,14 @@ export default function RDH_RO(props) {
     const useClickWOF = () => {
         setinputFieldWOF(allWOF);
     }
+    const set_0_WOF = () => {
+        setinputFieldWOF(allWOF_0);
+    }
+
+    const [datahave_qty, setDatahave_QTY] = useState([]);
+    const [action, setAction] = useState();
+    let sum_qty = 0;
+    let no_Bo = 0;
 
     const preview = () => {
         setNewmedia(media)
@@ -114,9 +141,36 @@ export default function RDH_RO(props) {
         setfw(swfw[1])
         setNewpersurface(persurface)
         setNewbuildType(type)
+        setAction(true)
         console.log('data', selectdataList)
-        console.log('all', allQTY)
         console.log('datainput', datainput)
+        setAction(
+            <TabResult />
+        )
+
+        const Nqty = inputFieldQTY.map(Number);
+        // console.log(Nqty)
+        // console.log(inputFieldQTY[0])
+        for (let i = 0; i < inputFieldQTY.length; i++) {
+            if (Nqty[i] > 1) {
+                sum_qty = sum_qty + Nqty[i];
+                no_Bo = no_Bo + 1
+            }
+        }
+        // const data_Qty = [...datahave_qty];
+        for (let i=0; i < selectdataList.length; i++) {
+            // console.log(selectdataList[i].HGA_BO)
+            if (inputFieldQTY[i] != 0 && inputFieldQTY[i] != null) {
+    
+                // setDatahave_QTY(...datahave_qty, [datahave_qty[i]]: selectdataList[i])
+                console.log(selectdataList[i])
+                // console.log(datahave_qty)
+            }
+            
+        }
+
+        
+
     }
     const datainput = [{
         qty: inputFieldQTY,
@@ -129,6 +183,39 @@ export default function RDH_RO(props) {
         media: media,
     }]
 
+
+    const TabResult = () => {
+        return (
+            <Container style={{ marginBottom: '20px', marginTop: '20px' }}>
+                <Table hover style={{ width: '280px', border: '2px solid black' }}>
+                    <tbody style={{ border: '2px solid black' }}>
+                        <td style={{ backgroundColor: '#8ED1FC' }}><strong>Bin</strong></td>
+                        <td>{selectdataList[0].EXP_ID}</td>
+                    </tbody>
+                    <tbody style={{ border: '2px solid black' }}>
+                        <td style={{ backgroundColor: '#8ED1FC' }}><strong>Product</strong></td>
+                        <td>{selectdataList[0].BLD_INTENT_PLATFORM}</td>
+                    </tbody>
+                    <tbody style={{ border: '2px solid black' }}>
+                        <td style={{ backgroundColor: '#8ED1FC' }}><strong>Bin QTY</strong></td>
+                        <td>{sum_qty}</td>
+                    </tbody>
+                    <tbody style={{ border: '2px solid black' }}>
+                        <td style={{ backgroundColor: '#8ED1FC' }}><strong>No. BO</strong></td>
+                        <td>{no_Bo}</td>
+                    </tbody>
+                    <tbody style={{ border: '2px solid black' }}>
+                        <td style={{ backgroundColor: '#8ED1FC' }}><strong>No. surface</strong></td>
+                        <td>????</td>
+                    </tbody>
+                    <tbody style={{ border: '2px solid black' }}>
+                        <td style={{ backgroundColor: '#8ED1FC' }}><strong>Unit per. surface</strong></td>
+                        <td>{persurface}</td>
+                    </tbody>
+                </Table>
+            </Container>
+        )
+    }
 
     return (
         <div style={{ marginTop: '6%' }}>
@@ -158,7 +245,6 @@ export default function RDH_RO(props) {
                     <Col></Col>
                 </Container>
             ) : null}
-
             {selectdataList.length !== 0 ? (
                 <Container style={{ marginBottom: '20px', marginTop: '20px' }}>
 
@@ -184,8 +270,11 @@ export default function RDH_RO(props) {
                                 <td style={{ backgroundColor: '#8ED1FC' }}><strong>BLD_INTENT_TYPE</strong></td>
                                 <td>{selectdataList[0].BLD_INTENT_TYPE}</td>
                             </tbody>
-
                         </Table>
+
+                        <ReactQuill theme="snow" value={value} onChange={setValue} />
+
+                        {Parser(value)}
 
                         <Table hover bordered>
                             <thead style={{ backgroundColor: '#8ED1FC' }}>
@@ -205,7 +294,11 @@ export default function RDH_RO(props) {
                                 <th>SEQ#/OldBO</th>
                                 <th>W/O</th>
                                 <th>WorkOrderFile
-                                    <a type='button' onClick={useClickWOF} ><TiInputChecked size={20} /><u>set 0</u></a>
+                                <input type="number" onChange={event => {
+                                        handleInputAllWOF(event)
+                                    }} style={{ width: '60px' }} />
+                                    <a type='button' onClick={useClickWOF} ><TiInputChecked size={20} /></a>
+                                    <a type='button' onClick={set_0_WOF} ><u>set 0</u></a>
                                 </th>
                                 <th>TMWI_ET</th>
                                 <th>Build_Num_ET</th>
@@ -256,6 +349,7 @@ export default function RDH_RO(props) {
                                             <td>{fw}</td>
                                             <td>{val.THREE_DIGIT_WAFER_CODE}</td>
                                             <td>-</td>
+
                                         </tr>
                                     </tbody>
                                 )
@@ -311,23 +405,28 @@ export default function RDH_RO(props) {
                         <p style={{ marginLeft: '10px' }}><strong> ปล. 80% ของ surf. สามารถดูได้จากตัวเลขจำนวน tray ที่ row > Minimum BOLA tray require / surface</strong></p>
                         <p style={{ marginLeft: '10px' }}>5) หลังจาก test เสร็จ ค่อย ทำการ Sort งานในแต่ล่ะ BOs และ complete แต่ละ BOs ที่ Label print (Completed HOLD)</p>
                     </div>
-                    <p><strong> Result is </strong>{type}{' '}{persurface}{' '}{swfw}{' '}{testON}{' '}{media}{' '}{inputFieldQTY}{' '}{inputFieldWOF}</p>
+                    {/* <p><strong> Result is </strong>{type}{' '}{persurface}{' '}{swfw}{' '}{testON}{' '}{media}{' '}{inputFieldQTY}{' '}{inputFieldWOF}</p> */}
 
 
                     <Button variant="outline-warning" onClick={preview} style={{ marginTop: '20px' }}  >preview</Button>
 
-                    <Link
+                    {/* <Link
                         type='button'
                         to={{
                             pathname: "/flowro",
-                            state: { datainput: datainput, dataselect: selectdataList } // your data array of objects
+                            state: { datainput: datainput, dataselect: selectdataList }
                         }}
-                    ><Button variant="outline-warning" style={{ marginTop: '20px' }}>Test</Button></Link>
+                    ><Button variant="outline-warning" style={{ marginTop: '20px' }}>Test</Button></Link> */}
+                    {action}
+
                 </Container>
+
             ) : null}
 
 
-
         </div>
+
     )
+    
+
 }

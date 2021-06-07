@@ -41,7 +41,7 @@ export default function Login() {
                         <Form.Group>
                             <Form.Control
                                 type="text"
-                                placeholder="Enter UID"
+                                placeholder="Enter GID"
                                 onChange={(event) => {
                                     setUid(event.target.value);
                                 }}
