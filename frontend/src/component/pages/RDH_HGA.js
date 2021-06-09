@@ -3,19 +3,33 @@ import Axios from 'axios';
 import { Card, Button, Col, Container, Form, Row, Table } from 'react-bootstrap';
 import { TiInputChecked } from 'react-icons/ti';
 
+// import Parser from 'html-react-parser';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
 
 export default function RDH_SDET(props) {
     const { datalist } = props;
     const [EXP_ID, SetEXP_ID] = useState("");
-    const [expid2, setExpid2] = useState("")
+    const [expid2, setExpid2] = useState("");
     const [selectdataList, setSelectdataList] = useState([]);
+    // const [sdet_dafault, setSdet_Default] = useState([]);
+
+    const [value, setValue] = useState('');
+
+    const [qty_sum, setQty_Sum] = useState();
+    const [hga0, setHGA0] = useState('');
+    const [hga1, setHGA1] = useState('');
+    const [tga0, setTGA0] = useState('');
+    const [tga1, setTGA1] = useState('');
+    const [slider0, setSlider0] = useState('');
+    const [slider1, setSlider1] = useState('');
 
     const getSelect = () => {
         if (datalist) {
             Axios.get(`http://localhost:3001/select?EXP_ID=${EXP_ID}`).then((response) => {
                 setSelectdataList(response.data);
                 setExpid2(EXP_ID)
-
             })
         } else {
             console.log("data NO NO");
@@ -34,8 +48,25 @@ export default function RDH_SDET(props) {
                     setSlider1(e.PARTNUM)
                 }
             });
+            const valuesall_sdet = [...allQTY];
+            const valuesqty = [...inputFieldQTY];
+            const Nqty = inputFieldQTY.map(Number);
+            for (let i = 0; i < selectdataList.length; i++) {
+                valuesall_sdet[i] = selectdataList[i].SDET_BN;
+                setSdet_BO(valuesall_sdet);
+
+                valuesqty[i] = selectdataList[i].HGA_QTY;
+                setinputFieldQTY(valuesqty);
+
+                if (Nqty[i] > 1) {
+                    sum_qty = sum_qty + Nqty[i];
+                }
+            }
+            setQty_Sum(sum_qty)
         }
+        console.log(selectdataList)
     }
+
     const [type, setTYPE] = useState("PRIME BUILD");
     const handleSelectType = (e) => {
         setTYPE(e.target.value)
@@ -75,6 +106,13 @@ export default function RDH_SDET(props) {
         const valueswof = [...inputFieldWOF];
         valueswof[index] = event.target.value;
         setinputFieldWOF(valueswof);
+    };
+
+    const [Sdet_BO, setSdet_BO] = useState([]);
+    const handleInputSdet_BO = (index, event) => {
+        const valuesSdet_bo = [...Sdet_BO];
+        valuesSdet_bo[index] = event.target.value;
+        setSdet_BO(valuesSdet_bo);
     };
 
     const [allQTY, setAllQTY] = useState([])
@@ -118,20 +156,17 @@ export default function RDH_SDET(props) {
     const useClickWOF = () => {
         setinputFieldWOF(allWOF);
     }
-    const set_0_WOF = () => {
-        setinputFieldWOF(allWOF_0);
-    }
+    // const set_0_WOF = () => {
+    //     setinputFieldWOF(allWOF_0);
+    // }
+    // const useClickClear = () => {
+    //     setSdet_BO("");
+    // }
 
-
-    const [hga0, setHGA0] = useState('');
-    const [hga1, setHGA1] = useState('');
-    const [tga0, setTGA0] = useState('');
-    const [tga1, setTGA1] = useState('');
-    const [slider0, setSlider0] = useState('');
-    const [slider1, setSlider1] = useState('');
 
     const [datahave_qty, setDatahave_QTY] = useState([]);
     const [action, setAction] = useState();
+
     let sum_qty = 0;
     let no_Bo = 0;
 
@@ -150,6 +185,7 @@ export default function RDH_SDET(props) {
         setNewpersurface(persurface)
         setNewbuildType(type)
         setAction(true)
+
         console.log('data', selectdataList)
         console.log('datainput', datainput)
         setAction(
@@ -157,22 +193,24 @@ export default function RDH_SDET(props) {
         )
 
         const Nqty = inputFieldQTY.map(Number);
-        console.log(Nqty)
-        console.log(inputFieldQTY[0])
+        // console.log(Nqty)
         for (let i = 0; i < inputFieldQTY.length; i++) {
             if (Nqty[i] > 1) {
                 sum_qty = sum_qty + Nqty[i];
+
                 no_Bo = no_Bo + 1
             }
         }
-        const valuesall_WOF = [...datahave_qty];
-        for (let i=0; i < selectdataList.length; i++) {
-            // console.log(selectdataList[i].HGA_BO)
-            if (inputFieldQTY[i] != 0 && inputFieldQTY[i] != null) {
-                
-                setDatahave_QTY(selectdataList[i])
-            }
-        }
+        setQty_Sum(sum_qty)
+        // console.log(sum_qty)
+        // const valuesall_WOF = [...datahave_qty];
+        // for (let i=0; i < selectdataList.length; i++) {
+        //     // console.log(selectdataList[i].HGA_BO)
+        //     if (inputFieldQTY[i] != 0 && inputFieldQTY[i] != null) {
+
+        //         setDatahave_QTY(selectdataList[i])
+        //     }
+        // }
 
     }
     const datainput = [{
@@ -184,6 +222,7 @@ export default function RDH_SDET(props) {
         fw: swfw[1],
         testON: testON,
         media: media,
+        Sdet_BO: Sdet_BO,
     }]
 
     const TabResult = () => {
@@ -223,11 +262,9 @@ export default function RDH_SDET(props) {
     return (
 
         <div style={{ marginTop: '6%' }}>
-
             <Container>
                 <h3>Create Build Flow RDH HGA</h3>
-                <Col></Col>
-                <Col md={10}>
+                <div>
                     <Card style={{ width: '18rem', marginTop: '1%' }}>
                         <Card.Header style={{ backgroundColor: '#c6ff00', fontWeight: 'bold' }}>No BIN.</Card.Header>
                         <Card.Body>
@@ -245,17 +282,13 @@ export default function RDH_SDET(props) {
                         </Card.Body>
                         <Button variant="outline-success" onClick={getSelect}>Success</Button>
                     </Card>
-                </Col>
-                <Col></Col>
+                </div>
             </Container>
 
-
-            {selectdataList.length && hga1.length !== 0 ? (
+            {selectdataList.length && (hga1.length || hga1.length) !== 0 ? (
                 <Container style={{ marginBottom: '5%', marginTop: '5%' }}>
-                    
+
                     <Col>
-                    
-                
                         <Table hover style={{ width: '300px', border: '2px solid black' }}>
                             <tbody style={{ border: '2px solid black' }}>
                                 <td style={{ width: '140px', backgroundColor: '#8ED1FC' }}><strong>BIN</strong></td>
@@ -287,7 +320,9 @@ export default function RDH_SDET(props) {
                             </tbody>
                         </Table>
 
-                        <Table responsive hover bordered>
+                        <ReactQuill theme="snow" value={value} onChange={setValue} />
+
+                        <Table hover bordered style={{ textAlign: 'center' }} >
                             <thead style={{ backgroundColor: 'yellow' }}>
                                 <th>No.</th>
                                 <th>PREFIX</th>
@@ -296,23 +331,28 @@ export default function RDH_SDET(props) {
                                 <th>HGA_BO</th>
                                 <th>AABdesign</th>
                                 <th>Sort <br></br>
-                                <input type="number" onChange={event => {
+                                    <input type="text" onChange={event => {
                                         handleInputAllSort(event)
                                     }} style={{ width: '60px' }} />
                                     <a type='button'><TiInputChecked size={20} onClick={useClickSort} /></a>
                                 </th>
-                                <th>SDET_loding_Q'ty<br></br>
-                                <input type="number" onChange={event => {
+                                <th>HGA_loding_Q'ty<br></br>
+                                    <input type="number" onChange={event => {
                                         handleInputAll(event)
                                     }} style={{ width: '60px' }} />
                                     <a type='button'><TiInputChecked size={20} onClick={useClickQTY} /></a>
                                 </th>
-                                <th>SDET_Retest_BIN</th>
-                                <th>SDET_Retest_BO</th>
-                                <th>SEQ#Old_BO</th>
+                                <th>SDET_BO</th>
+                                <th> SEQ#/Old_BO </th>
                                 <th>WAF_CODE</th>
                                 <th>W/O</th>
-                                <th>Work_Oder_File</th>
+                                <th>Work_Oder_File
+                                <input type="number" onChange={event => {
+                                        handleInputAllWOF(event)
+                                    }} style={{ width: '60px' }} />
+                                    <a type='button' onClick={useClickWOF} ><TiInputChecked size={20} /></a>
+                                    {/* <a type='button' onClick={set_0_WOF} ><u>set 0</u></a> */}
+                                </th>
                                 <th>SAAM_TSR</th>
                                 <th>ET_TSR</th>
                                 <th>TMWI_ET</th>
@@ -320,23 +360,18 @@ export default function RDH_SDET(props) {
                                 <th>ET_S/W</th>
                                 <th>ET_F/W</th>
                             </thead>
-                            {selectdataList.map((val, index) => {
-                                let newT;
-                                if (val.SDET_TAB[index] === '0') {
-                                    newT = 'Dn-00'
-                                } else {
-                                    newT = 'Up-01'
-                                }
-                                return (
-                                    <tbody>
+
+                            <tbody>
+                                {selectdataList.map((val, index) => {
+                                    return (
                                         <tr>
                                             <td>{index + 1}</td>
-                                            <td>{val.SDET_BUILDGROUP}</td>
-                                            <td>{val.SDET_PRIORITY}</td>
-                                            <td style={{ width: '1000px' }}>{newT}</td>
+                                            <td>{val.BUILDGROUP}</td>
+                                            <td>{val.HGA_PRIORITY}</td>
+                                            <td >{val.PARM_HGA_TAB}</td>
                                             <td>{val.HGA_BO}</td>
                                             <td>{val.AIRBEARINGDESIGN}</td>
-                                            <td><input type="number" value={inputFieldSort[index]} onChange={event => {
+                                            <td><input type="text" value={inputFieldSort[index]} onChange={event => {
                                                 handleInputSort(
                                                     index,
                                                     event
@@ -347,13 +382,18 @@ export default function RDH_SDET(props) {
                                                     index,
                                                     event
                                                 );
-                                            }} style={{ width: '100px' }} /></td>
-                                            <td>column?</td>
-                                            <td>{val.SDET_RETEST_BUILD_NUMBER}</td>
-                                            <td>Column?</td>
-                                            <td>{val.WAF_CODE}</td>
-                                            <td>{val.SDET_BUILDGROUP}{val.SDET_BN.slice(2)}{newT[0]}</td>
-                                            <td>{val.SDET_BUILDGROUP}{val.SDET_BN.slice(2)}{newT[0]}-
+                                            }} style={{ width: '100px' }} /><br></br>
+                                            </td>
+                                            <td><input type="text" value={Sdet_BO[index]} onChange={(event) => {
+                                                handleInputSdet_BO(
+                                                    index,
+                                                    event
+                                                )
+                                            }} style={{ width: '140px' }} /></td>
+                                            <td>{val.SLD_BO}</td>
+                                            <td>{val.THREE_DIGIT_WAFER_CODE}</td>
+                                            <td>{val.BUILDGROUP}{val.HGA_BO.slice(3)}{val.PARM_HGA_TAB[0]}</td>
+                                            <td>{val.BUILDGROUP}{val.HGA_BO.slice(3)}{val.PARM_HGA_TAB[0]}-
                                             <input type="number" value={inputFieldWOF[index]} onChange={event => {
                                                     handleInputWOF(
                                                         index,
@@ -361,15 +401,37 @@ export default function RDH_SDET(props) {
                                                     );
                                                 }} style={{ width: '60px' }} />.wo</td>
                                             <td>{val.TSR_PN_G_SAAM}</td>
-                                            <td>{val.SDET_ET_TSR}</td>
-                                            <td>{val.SDET_BUILDGROUP}{val.SDET_BN.slice(2)}</td>
-                                            <td>{val.SDET_BN}</td>
+                                            <td>{val.HGA_ET_TSR}</td>
+                                            <td>{val.BUILDGROUP}{val.HGA_BO.slice(3)}</td>
+                                            <td>{val.HGA_BO}</td>
                                             <td>{sw}</td>
                                             <td>{fw}</td>
                                         </tr>
-                                    </tbody>
-                                )
-                            })}
+                                    )
+                                })}
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <th>{qty_sum}</th>
+                                    <td></td>
+                                    {/* <td style={{textAlign: 'center'}}><button onClick={useClickClear}>clear</button></td> */}
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
                         </Table>
                     </Col>
 
@@ -422,7 +484,6 @@ export default function RDH_SDET(props) {
                         <p style={{ marginLeft: '10px' }}><strong> ปล. 80% ของ surf. สามารถดูได้จากตัวเลขจำนวน tray ที่ row > Minimum BOLA tray require / surface</strong></p>
                         <p style={{ marginLeft: '10px' }}>5) หลังจาก test เสร็จ ค่อย ทำการ Sort งานในแต่ล่ะ BOs และ complete แต่ละ BOs ที่ Label print (Completed HOLD)</p>
                     </div>
-                    {/* <p><strong> Result is </strong>{type}{' '}{persurface}{' '}{swfw}{' '}{testON}{' '}{media}{' '}{inputFieldQTY}{' '}{inputFieldWOF}</p> */}
 
 
                     <Button variant="outline-warning" onClick={preview} style={{ marginTop: '20px' }}  >preview</Button>
@@ -437,8 +498,7 @@ export default function RDH_SDET(props) {
                     {action}
 
                 </Container>
-    ) : null
-}
+            ) : null}
 
         </div >
     )

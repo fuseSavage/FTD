@@ -2,18 +2,18 @@ import React, { useState } from 'react'
 import Axios from 'axios'
 import { Card, Button, Col, Container, Form, Table } from 'react-bootstrap'
 import ReactExport from 'react-data-export';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { TiInputChecked } from 'react-icons/ti';
 
 
-import Parser from 'html-react-parser';
+// import Parser from 'html-react-parser';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 
 
-const ExcelFile = ReactExport.ExcelFile;
-const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+// const ExcelFile = ReactExport.ExcelFile;
+// const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 
 
 
@@ -23,7 +23,7 @@ export default function RDH_RO(props) {
     const [EXP_ID, SetEXP_ID] = useState("");
 
     const [value, setValue] = useState('');
-    
+
     const getSelect = () => {
         if (datalist) {
             Axios.get(`http://localhost:3001/select?EXP_ID=${EXP_ID}`).then((response) => {
@@ -149,8 +149,6 @@ export default function RDH_RO(props) {
         )
 
         const Nqty = inputFieldQTY.map(Number);
-        // console.log(Nqty)
-        // console.log(inputFieldQTY[0])
         for (let i = 0; i < inputFieldQTY.length; i++) {
             if (Nqty[i] > 1) {
                 sum_qty = sum_qty + Nqty[i];
@@ -158,18 +156,18 @@ export default function RDH_RO(props) {
             }
         }
         // const data_Qty = [...datahave_qty];
-        for (let i=0; i < selectdataList.length; i++) {
-            // console.log(selectdataList[i].HGA_BO)
+        for (let i = 0; i < selectdataList.length; i++) {
+            console.log(selectdataList[i].HGA_BO)
             if (inputFieldQTY[i] != 0 && inputFieldQTY[i] != null) {
-    
-                // setDatahave_QTY(...datahave_qty, [datahave_qty[i]]: selectdataList[i])
-                console.log(selectdataList[i])
-                // console.log(datahave_qty)
+
+                // data_Qty[i] = selectdataList[i]
+                // setDatahave_QTY(data_Qty[i])
+                console.log(selectdataList)
+
             }
             
         }
-
-        
+        console.log(datahave_qty)
 
     }
     const datainput = [{
@@ -274,7 +272,7 @@ export default function RDH_RO(props) {
 
                         <ReactQuill theme="snow" value={value} onChange={setValue} />
 
-                        {Parser(value)}
+                        {/* {Parser(value)} */}
 
                         <Table hover bordered>
                             <thead style={{ backgroundColor: '#8ED1FC' }}>
@@ -427,6 +425,6 @@ export default function RDH_RO(props) {
         </div>
 
     )
-    
+
 
 }

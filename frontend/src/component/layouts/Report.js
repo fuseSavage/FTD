@@ -26,18 +26,22 @@ export default function Report() {
                 <ListItem button component="a" href="/rdhhga">
                     <IoCreateSharp size={17} /><a style={{fontSize:'14px'}}>RDH HGA Full Build</a>
                 </ListItem>
-                <ListItem button component="a" href="/skybolt">
-                    <IoCreateSharp size={17} /><a style={{fontSize:'14px'}}>AMA L-Slider-SDET</a>
+                <ListItem button component="a" href="/amasld">
+                    <IoCreateSharp size={17} /><a style={{fontSize:'14px'}}>AMA L-Slider</a>
                 </ListItem>
-                <ListItem button component="a" href="/skybolt">
-                    <IoCreateSharp size={17} /><a style={{fontSize:'14px'}}>AMA L-Slider-HGA (no SDET)</a>
-                </ListItem>
-                <ListItem button component="a" href="/skybolt">
+                <ListItem button component="a" href="/amasdet">
                     <IoCreateSharp size={17} /><a style={{fontSize:'14px'}}>AMA SDET</a>
                 </ListItem>
-                <ListItem button component="a" href="/skybolt">
+                <ListItem button component="a" href="/amahga">
                     <IoCreateSharp size={17} /><a style={{fontSize:'14px'}}>AMA HGA</a>
                 </ListItem>
+                <ListItem button component="a" href="/sldsdet">
+                    <IoCreateSharp size={17} /><a style={{fontSize:'14px'}}>AMA L-Slider-SDET</a>
+                </ListItem>
+                <ListItem button component="a" href="/sldhga">
+                    <IoCreateSharp size={17} /><a style={{fontSize:'14px'}}>AMA L-Slider-HGA (no SDET)</a>
+                </ListItem>
+                
             </List>
             <Divider />
             <List>
