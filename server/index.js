@@ -65,6 +65,20 @@ app.get('/select', (req, res) => {
         })
 })
 
+//AMA
+app.get('/ama', (req, res) => {
+    const exp_id = req.query.EXP_ID;
+    // console.log(exp_id)
+    db.query(`SELECT * FROM bin_ama WHERE EXP_ID = "${exp_id}" ORDER BY SLD_BO ASC`,
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send(result);
+            }
+        })
+})
+
 app.get('/dataflow',async (req, res) => {
     await dataflow.query(`SELECT * FROM dataflow`,
         (err, result) => {

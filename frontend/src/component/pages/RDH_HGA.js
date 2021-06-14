@@ -264,242 +264,251 @@ export default function RDH_SDET(props) {
         <div style={{ marginTop: '6%' }}>
             <Container>
                 <h3>Create Build Flow RDH HGA</h3>
-                <div>
-                    <Card style={{ width: '18rem', marginTop: '1%' }}>
-                        <Card.Header style={{ backgroundColor: '#c6ff00', fontWeight: 'bold' }}>No BIN.</Card.Header>
-                        <Card.Body>
-                            <Form>
-                                <Form.Group>
-                                    <Form.Control
-                                        type="text"
-                                        placeholder="Enter No BIN."
-                                        onChange={(event) => {
-                                            SetEXP_ID(event.target.value);
-                                        }}
-                                    />
-                                </Form.Group>
-                            </Form>
-                        </Card.Body>
-                        <Button variant="outline-success" onClick={getSelect}>Success</Button>
-                    </Card>
-                </div>
-            </Container>
+                {slider0.length === 0 ? (
+                    <Container>
+                        <Card style={{ width: '18rem', marginTop: '1%' }}>
+                            <Card.Header style={{ backgroundColor: '#c6ff00', fontWeight: 'bold' }}>No BIN.</Card.Header>
+                            <Card.Body>
+                                <Form>
+                                    <Form.Group>
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="Enter No BIN."
+                                            onChange={(event) => {
+                                                SetEXP_ID(event.target.value);
+                                                setExpid2(event.target.value);
+                                            }}
+                                        />
+                                    </Form.Group>
+                                </Form>
+                            </Card.Body>
+                            <Button variant="outline-success" onClick={getSelect}>Success</Button>
+                        </Card>
+                    </Container>
+                ) : null}
 
-            {selectdataList.length && (hga1.length || hga1.length) !== 0 ? (
-                <Container style={{ marginBottom: '5%', marginTop: '5%' }}>
+                {selectdataList.length && (slider0.length || slider1.length) !== 0 ? (
+                    <Container style={{ marginBottom: '5%', marginTop: '5%' }}>
 
-                    <Col>
-                        <Table hover style={{ width: '300px', border: '2px solid black' }}>
-                            <tbody style={{ border: '2px solid black' }}>
-                                <td style={{ width: '140px', backgroundColor: '#8ED1FC' }}><strong>BIN</strong></td>
-                                <td style={{ border: '2px solid black' }}><input type="text" value={expid2} onChange={(event) => {
-                                    setExpid2(event.target.value);
-                                }} style={{ width: '140px' }} /></td>
-                            </tbody>
-                        </Table>
-                        <Table responsive hover style={{ width: '300px', border: '2px solid black' }}>
-                            <tbody style={{ border: '2px solid black' }}>
-                                <td style={{ backgroundColor: '#8ED1FC' }}><strong>TAB</strong></td>
-                                <td style={{ border: '2px solid black' }}>Up-01</td>
-                                <td style={{ border: '2px solid black' }}>Dn-00</td>
-                            </tbody>
-                            <tbody style={{ border: '2px solid black' }}>
-                                <td style={{ backgroundColor: '#8ED1FC' }}><strong>HGA P/N</strong></td>
-                                <td style={{ border: '2px solid black' }}>{hga1}</td>
-                                <td style={{ border: '2px solid black' }}>{hga0}</td>
-                            </tbody>
-                            <tbody style={{ border: '2px solid black' }}>
-                                <td style={{ backgroundColor: '#8ED1FC' }}><strong>TGA P/N</strong></td>
-                                <td style={{ border: '2px solid black' }}>{tga1}</td>
-                                <td style={{ border: '2px solid black' }}>{tga0}</td>
-                            </tbody>
-                            <tbody style={{ border: '2px solid black' }}>
-                                <td style={{ backgroundColor: '#8ED1FC' }}><strong>Slider P/N</strong></td>
-                                <td style={{ border: '2px solid black' }}>{slider1}</td>
-                                <td style={{ border: '2px solid black' }}>{slider0}</td>
-                            </tbody>
-                        </Table>
+                        <div>
+                            <Table hover style={{ width: '300px', border: '2px solid black' }}>
+                                <tbody style={{ border: '2px solid black' }}>
+                                    <td style={{ width: '140px', backgroundColor: '#8ED1FC' }}><strong>BIN</strong></td>
+                                    <td style={{ border: '2px solid black' }}><input type="text" value={expid2} onChange={(event) => {
+                                        setExpid2(event.target.value);
+                                    }} style={{ width: '140px' }} /></td>
+                                </tbody>
+                            </Table>
+                        </div>
 
-                        <ReactQuill theme="snow" value={value} onChange={setValue} />
+                        <div>
+                            <Table responsive hover style={{ width: '300px', border: '2px solid black' }}>
+                                <tbody style={{ border: '2px solid black' }}>
+                                    <td style={{ backgroundColor: '#8ED1FC' }}><strong>TAB</strong></td>
+                                    <td style={{ border: '2px solid black' }}>Up-01</td>
+                                    <td style={{ border: '2px solid black' }}>Dn-00</td>
+                                </tbody>
+                                <tbody style={{ border: '2px solid black' }}>
+                                    <td style={{ backgroundColor: '#8ED1FC' }}><strong>HGA P/N</strong></td>
+                                    <td style={{ border: '2px solid black' }}>{hga1}</td>
+                                    <td style={{ border: '2px solid black' }}>{hga0}</td>
+                                </tbody>
+                                <tbody style={{ border: '2px solid black' }}>
+                                    <td style={{ backgroundColor: '#8ED1FC' }}><strong>TGA P/N</strong></td>
+                                    <td style={{ border: '2px solid black' }}>{tga1}</td>
+                                    <td style={{ border: '2px solid black' }}>{tga0}</td>
+                                </tbody>
+                                <tbody style={{ border: '2px solid black' }}>
+                                    <td style={{ backgroundColor: '#8ED1FC' }}><strong>Slider P/N</strong></td>
+                                    <td style={{ border: '2px solid black' }}>{slider1}</td>
+                                    <td style={{ border: '2px solid black' }}>{slider0}</td>
+                                </tbody>
+                            </Table>
 
-                        <Table hover bordered style={{ textAlign: 'center' }} >
-                            <thead style={{ backgroundColor: 'yellow' }}>
-                                <th>No.</th>
-                                <th>PREFIX</th>
-                                <th>Priority</th>
-                                <th>TAB</th>
-                                <th>HGA_BO</th>
-                                <th>AABdesign</th>
-                                <th>Sort <br></br>
-                                    <input type="text" onChange={event => {
-                                        handleInputAllSort(event)
-                                    }} style={{ width: '60px' }} />
-                                    <a type='button'><TiInputChecked size={20} onClick={useClickSort} /></a>
-                                </th>
-                                <th>HGA_loding_Q'ty<br></br>
-                                    <input type="number" onChange={event => {
-                                        handleInputAll(event)
-                                    }} style={{ width: '60px' }} />
-                                    <a type='button'><TiInputChecked size={20} onClick={useClickQTY} /></a>
-                                </th>
-                                <th>SDET_BO</th>
-                                <th> SEQ#/Old_BO </th>
-                                <th>WAF_CODE</th>
-                                <th>W/O</th>
-                                <th>Work_Oder_File
+                            <ReactQuill theme="snow" value={value} onChange={setValue} />
+                        </div>
+
+                        <div>
+                            <Table responsive hover bordered style={{ textAlign: 'center' }} >
+                                <thead style={{ backgroundColor: '#8ED1FC' }}>
+                                    <th>No.</th>
+                                    <th>PREFIX</th>
+                                    <th>Priority</th>
+                                    <th>TAB</th>
+                                    <th>HGA_BO</th>
+                                    <th>AABdesign</th>
+                                    <th>Sort <br></br>
+                                        <input type="text" onChange={event => {
+                                            handleInputAllSort(event)
+                                        }} style={{ width: '60px' }} />
+                                        <a type='button'><TiInputChecked size={20} onClick={useClickSort} /></a>
+                                    </th>
+                                    <th>HGA_loding_Q'ty<br></br>
+                                        <input type="number" onChange={event => {
+                                            handleInputAll(event)
+                                        }} style={{ width: '60px' }} />
+                                        <a type='button'><TiInputChecked size={20} onClick={useClickQTY} /></a>
+                                    </th>
+                                    <th>SDET_BO</th>
+                                    <th> SEQ#/Old_BO </th>
+                                    <th>WAF_CODE</th>
+                                    <th>W/O</th>
+                                    <th>Work_Oder_File
                                 <input type="number" onChange={event => {
-                                        handleInputAllWOF(event)
-                                    }} style={{ width: '60px' }} />
-                                    <a type='button' onClick={useClickWOF} ><TiInputChecked size={20} /></a>
-                                    {/* <a type='button' onClick={set_0_WOF} ><u>set 0</u></a> */}
-                                </th>
-                                <th>SAAM_TSR</th>
-                                <th>ET_TSR</th>
-                                <th>TMWI_ET</th>
-                                <th>Build_Num_ET</th>
-                                <th>ET_S/W</th>
-                                <th>ET_F/W</th>
-                            </thead>
+                                            handleInputAllWOF(event)
+                                        }} style={{ width: '60px' }} />
+                                        <a type='button' onClick={useClickWOF} ><TiInputChecked size={20} /></a>
+                                        {/* <a type='button' onClick={set_0_WOF} ><u>set 0</u></a> */}
+                                    </th>
+                                    <th>SAAM_TSR</th>
+                                    <th>ET_TSR</th>
+                                    <th>TMWI_ET</th>
+                                    <th>Build_Num_ET</th>
+                                    <th>ET_S/W</th>
+                                    <th>ET_F/W</th>
+                                </thead>
 
-                            <tbody>
-                                {selectdataList.map((val, index) => {
-                                    return (
-                                        <tr>
-                                            <td>{index + 1}</td>
-                                            <td>{val.BUILDGROUP}</td>
-                                            <td>{val.HGA_PRIORITY}</td>
-                                            <td >{val.PARM_HGA_TAB}</td>
-                                            <td>{val.HGA_BO}</td>
-                                            <td>{val.AIRBEARINGDESIGN}</td>
-                                            <td><input type="text" value={inputFieldSort[index]} onChange={event => {
-                                                handleInputSort(
-                                                    index,
-                                                    event
-                                                );
-                                            }} style={{ width: '100px' }} /></td>
-                                            <td><input type="number" value={inputFieldQTY[index]} onChange={event => {
-                                                handleInputQTY(
-                                                    index,
-                                                    event
-                                                );
-                                            }} style={{ width: '100px' }} /><br></br>
-                                            </td>
-                                            <td><input type="text" value={Sdet_BO[index]} onChange={(event) => {
-                                                handleInputSdet_BO(
-                                                    index,
-                                                    event
-                                                )
-                                            }} style={{ width: '140px' }} /></td>
-                                            <td>{val.SLD_BO}</td>
-                                            <td>{val.THREE_DIGIT_WAFER_CODE}</td>
-                                            <td>{val.BUILDGROUP}{val.HGA_BO.slice(3)}{val.PARM_HGA_TAB[0]}</td>
-                                            <td>{val.BUILDGROUP}{val.HGA_BO.slice(3)}{val.PARM_HGA_TAB[0]}-
-                                            <input type="number" value={inputFieldWOF[index]} onChange={event => {
-                                                    handleInputWOF(
+                                <tbody>
+                                    {selectdataList.map((val, index) => {
+                                        return (
+                                            <tr>
+                                                <td>{index + 1}</td>
+                                                <td>{val.BUILDGROUP}</td>
+                                                <td>{val.HGA_PRIORITY}</td>
+                                                <td >{val.PARM_HGA_TAB}</td>
+                                                <td>{val.HGA_BO}</td>
+                                                <td>{val.AIRBEARINGDESIGN}</td>
+                                                <td><input type="text" value={inputFieldSort[index]} onChange={event => {
+                                                    handleInputSort(
                                                         index,
                                                         event
                                                     );
-                                                }} style={{ width: '60px' }} />.wo</td>
-                                            <td>{val.TSR_PN_G_SAAM}</td>
-                                            <td>{val.HGA_ET_TSR}</td>
-                                            <td>{val.BUILDGROUP}{val.HGA_BO.slice(3)}</td>
-                                            <td>{val.HGA_BO}</td>
-                                            <td>{sw}</td>
-                                            <td>{fw}</td>
-                                        </tr>
-                                    )
-                                })}
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <th>{qty_sum}</th>
-                                    <td></td>
-                                    {/* <td style={{textAlign: 'center'}}><button onClick={useClickClear}>clear</button></td> */}
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </Table>
-                    </Col>
+                                                }} style={{ width: '100px' }} /></td>
+                                                <td><input type="number" value={inputFieldQTY[index]} onChange={event => {
+                                                    handleInputQTY(
+                                                        index,
+                                                        event
+                                                    );
+                                                }} style={{ width: '100px' }} /><br></br>
+                                                </td>
+                                                <td><input type="text" value={Sdet_BO[index]} onChange={(event) => {
+                                                    handleInputSdet_BO(
+                                                        index,
+                                                        event
+                                                    )
+                                                }} style={{ width: '140px' }} /></td>
+                                                <td>{val.SLD_BO}</td>
+                                                <td>{val.THREE_DIGIT_WAFER_CODE}</td>
+                                                <td>{val.BUILDGROUP}{val.HGA_BO.slice(3)}{val.PARM_HGA_TAB[0]}</td>
+                                                <td>{val.BUILDGROUP}{val.HGA_BO.slice(3)}{val.PARM_HGA_TAB[0]}-
+                                            <input type="number" value={inputFieldWOF[index]} onChange={event => {
+                                                        handleInputWOF(
+                                                            index,
+                                                            event
+                                                        );
+                                                    }} style={{ width: '60px' }} />.wo</td>
+                                                <td>{val.TSR_PN_G_SAAM}</td>
+                                                <td>{val.HGA_ET_TSR}</td>
+                                                <td>{val.BUILDGROUP}{val.HGA_BO.slice(3)}</td>
+                                                <td>{val.HGA_BO}</td>
+                                                <td>{sw}</td>
+                                                <td>{fw}</td>
+                                            </tr>
+                                        )
+                                    })}
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <th>{qty_sum}</th>
+                                        <td></td>
+                                        {/* <td style={{textAlign: 'center'}}><button onClick={useClickClear}>clear</button></td> */}
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </Table>
+                        </div>
 
-                    <div style={{ marginTop: '20px' }}>
-                        <p>BUILD TYPE :
-                        <select value={type} onChange={handleSelectType} >
-                                <option value="PRIME BUILD">PRIME BUILD</option>
-                                <option value="WSAT">WSAT</option>
-                                <option value="DVT Retest">DVT Retest</option>
-                            </select>
-                        </p>
 
-                        <p>Set HGA BO Per surface :
-                        <input type="number" value={persurface} onChange={(event) => {
-                                setPersurface(event.target.value);
-                            }} style={{ width: '100px' }} />
-                        </p>
 
-                        <p>SW/FW :
-                        <select value={newswfw} onChange={handleSelectSWFW} >
-                                <option value='4.51B213/SHF 1.6.1.246'>4.51B213 / SHF 1.6.1.246</option>
-                                <option value='WITE4.51B121/SHF 1.6.1.187'>WITE4.51B121 / SHF 1.6.1.187</option>
-                                <option value='SW4.51B121/SHF 1.6.1.161'>SW4.51B121 / SHF 1.6.1.161</option>
-                                <option value='WITE450B901/SHF1.6.1.141'>WITE450B901 / SHF1.6.1.141</option>
-                            </select>
-                        </p>
+                        <div style={{ marginTop: '20px' }}>
+                            <p>BUILD TYPE :
+                                <select value={type} onChange={handleSelectType} >
+                                    <option value="PRIME BUILD">PRIME BUILD</option>
+                                    <option value="WSAT">WSAT</option>
+                                    <option value="DVT Retest">DVT Retest</option>
+                                </select>
+                            </p>
 
-                        <p>1) Build flow สำหรับ Test งาน {selectdataList.length} BOs กลุ่ม RO-02359 จะ ทำการ Test บน เครื่อง
-                        <input type="text" value={testON} onChange={(event) => {
-                                setTestON(event.target.value);
-                            }} style={{ width: '500px' }} />
-                        </p>
+                            <p>Set HGA BO Per surface :
+                            <input type="number" value={persurface} onChange={(event) => {
+                                    setPersurface(event.target.value);
+                                }} style={{ width: '100px' }} />
+                            </p>
 
-                        <p>- ลำดับการ test ในแต่ละ Surf.
+                            <p>SW/FW :
+                                <select value={newswfw} onChange={handleSelectSWFW} >
+                                    <option value='4.51B213/SHF 1.6.1.246'>4.51B213 / SHF 1.6.1.246</option>
+                                    <option value='WITE4.51B121/SHF 1.6.1.187'>WITE4.51B121 / SHF 1.6.1.187</option>
+                                    <option value='SW4.51B121/SHF 1.6.1.161'>SW4.51B121 / SHF 1.6.1.161</option>
+                                    <option value='WITE450B901/SHF1.6.1.141'>WITE450B901 / SHF1.6.1.141</option>
+                                </select>
+                            </p>
+
+                            <p>1) Build flow สำหรับ Test งาน {selectdataList.length} BOs กลุ่ม RO-02359 จะ ทำการ Test บน เครื่อง
+                                <input type="text" value={testON} onChange={(event) => {
+                                    setTestON(event.target.value);
+                                }} style={{ width: '500px' }} />
+                            </p>
+
+                            <p>- ลำดับการ test ในแต่ละ Surf.
                             <p style={{ marginLeft: '25px' }}><strong>* Surf. ที่เป็นเลขคี่ให้เริ่ม test จาก Tab DN ให้หมดก่อน (Surf. 1, 3, 5, ... )</strong></p>
-                            <p style={{ marginLeft: '25px' }}><strong>* Surf. ที่เป็นเลขคู่ให้เริ่ม test จาก Tab UP ให้หมดก่อน (Surf. 2, 4, 6, ....)</strong></p>
-                        </p>
+                                <p style={{ marginLeft: '25px' }}><strong>* Surf. ที่เป็นเลขคู่ให้เริ่ม test จาก Tab UP ให้หมดก่อน (Surf. 2, 4, 6, ....)</strong></p>
+                            </p>
 
-                        <p>2) Media ที่ใช้ เราจะใช้ Media <input type="number" value={media} onChange={(event) => {
-                            setMedia(event.target.value);
-                        }} style={{ width: '100px' }} /> จำนวน <strong>X</strong> surfaces เพื่อ test งาน {selectdataList.length} BO. นี้
-                        </p>
+                            <p>2) Media ที่ใช้ เราจะใช้ Media <input type="number" value={media} onChange={(event) => {
+                                setMedia(event.target.value);
+                            }} style={{ width: '100px' }} /> จำนวน <strong>X</strong> surfaces เพื่อ test งาน {selectdataList.length} BO. นี้
+                            </p>
 
-                        <p>3) โปรดใช้ความระมัดระวัง ในการ Load media ให้เป็นไปตามลำดับในการ test ให้ดู ตารางข้อมูล ประกอบ</p>
-                        <p>4) กรณีเกิด media scratch</p>
-                        <p style={{ marginLeft: '10px' }}>- ถ้า test งานได้ {'< 80%'} ของ surf.ใดๆ แล้วเกิด media scratch ให้เปลี่ยน media แล้ว retest ทั้ง surf.</p>
-                        <p style={{ marginLeft: '10px' }}>- ถ้า test งานได้ {'>='} 80% ของ surf. ใดๆ แล้วเกิด media scratch ไม่ต้อง retest ทั้ง surf. ให้เปลี่ยน media แล้ว test งานที่เหลืออีก 20% และใช้ media นี้ test งาน surf. ต่อไปได้เลย</p>
-                        <p style={{ marginLeft: '10px' }}>- ถ้า เป็น BIN WSAT กรณีเกิด media scratch ไม่ต้อง retest ให้เปลี่ยน media แล้ว test งานต่อได้เลย</p>
-                        <p style={{ marginLeft: '10px' }}>- wDVT Retest BIN ไม่ต้อง retest ให้เปลี่ยน media surface แล้ว test ต่อไปได้เลย</p>
-                        <p style={{ marginLeft: '10px' }}><strong> ปล. 80% ของ surf. สามารถดูได้จากตัวเลขจำนวน tray ที่ row > Minimum BOLA tray require / surface</strong></p>
-                        <p style={{ marginLeft: '10px' }}>5) หลังจาก test เสร็จ ค่อย ทำการ Sort งานในแต่ล่ะ BOs และ complete แต่ละ BOs ที่ Label print (Completed HOLD)</p>
-                    </div>
+                            <p>3) โปรดใช้ความระมัดระวัง ในการ Load media ให้เป็นไปตามลำดับในการ test ให้ดู ตารางข้อมูล ประกอบ</p>
+                            <p>4) กรณีเกิด media scratch</p>
+                            <p style={{ marginLeft: '10px' }}>- ถ้า test งานได้ {'< 80%'} ของ surf.ใดๆ แล้วเกิด media scratch ให้เปลี่ยน media แล้ว retest ทั้ง surf.</p>
+                            <p style={{ marginLeft: '10px' }}>- ถ้า test งานได้ {'>='} 80% ของ surf. ใดๆ แล้วเกิด media scratch ไม่ต้อง retest ทั้ง surf. ให้เปลี่ยน media แล้ว test งานที่เหลืออีก 20% และใช้ media นี้ test งาน surf. ต่อไปได้เลย</p>
+                            <p style={{ marginLeft: '10px' }}>- ถ้า เป็น BIN WSAT กรณีเกิด media scratch ไม่ต้อง retest ให้เปลี่ยน media แล้ว test งานต่อได้เลย</p>
+                            <p style={{ marginLeft: '10px' }}>- wDVT Retest BIN ไม่ต้อง retest ให้เปลี่ยน media surface แล้ว test ต่อไปได้เลย</p>
+                            <p style={{ marginLeft: '10px' }}><strong> ปล. 80% ของ surf. สามารถดูได้จากตัวเลขจำนวน tray ที่ row > Minimum BOLA tray require / surface</strong></p>
+                            <p style={{ marginLeft: '10px' }}>5) หลังจาก test เสร็จ ค่อย ทำการ Sort งานในแต่ล่ะ BOs และ complete แต่ละ BOs ที่ Label print (Completed HOLD)</p>
 
+                            <Button variant="outline-warning" onClick={preview} style={{ marginTop: '20px' }}  >preview</Button>
+                        </div>
 
-                    <Button variant="outline-warning" onClick={preview} style={{ marginTop: '20px' }}  >preview</Button>
-
-                    {/* <Link
+                        {/* <Link
                         type='button'
                         to={{
                             pathname: "/flowro",
                             state: { datainput: datainput, dataselect: selectdataList }
                         }}
                     ><Button variant="outline-warning" style={{ marginTop: '20px' }}>Test</Button></Link> */}
-                    {action}
-
-                </Container>
-            ) : null}
-
+                        <div>
+                            {action}
+                        </div>
+                    </Container>
+                ) : null}
+            </Container>
         </div >
     )
 }
