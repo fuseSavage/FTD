@@ -48,7 +48,7 @@ export default function Report() {
                 <ListItem>
                     <RiFileHistoryFill size={20} /><strong> Configurations </strong>
                 </ListItem>
-                <ListItem button component="a" href="/dataflow">
+                <ListItem button component="a" href="/addimg">
                     <BiHistory size={20} /> <a>Add Image Flow</a>
                 </ListItem>
                 <ListItem button component="a" href="/chengai">

@@ -171,11 +171,10 @@ export default function AMA_SDET(props) {
     //End preview//
 
     return (
-
         <div style={{ marginTop: '6%' }}>
             <Container>
                 <h3>Create Build Flow AMA HGA</h3>
-                {l_sliderdn.length === 0 ? (
+                {l_sliderup.length === 0 || l_sliderdn.length === 0 ? (
                     <Container>
                         <Col>
                             <div>
@@ -201,7 +200,7 @@ export default function AMA_SDET(props) {
                     </Container>
                 ) : null}
 
-                {l_sliderdn.length || l_sliderdn.length !== 0 ? (
+                {l_sliderup.length !== 0 || l_sliderdn.length !== 0 ? (
                     <Container>
                         <div>
                             <Table responsive hover style={{ width: '300px', border: '2px solid black' }}>

@@ -20,6 +20,7 @@ import AMA_HGA from './component/pages/AMA_HGA';
 import AMA_L_Slider from './component/pages/AMA_L_Slider';
 import L_Slider_SDET from './component/pages/L_Slider_SDET';
 import L_Slider_HGA from './component/pages/L_Slider_HGA';
+import AddImg from './component/pages/configurations/AddImg';
 
 const drawerWidth = 240;
 
@@ -164,6 +165,8 @@ return (
           <Route path='/sldhga' exact component={() => <L_Slider_HGA datalist={datalist} />}></Route>
 
           <Route path='/flowro' exact component={() => <Flow_RDH_RO />}></Route>
+
+          <Route path='/addimg' exact component={AddImg} ></Route>
         </Switch>
         <Footer />
       </main>

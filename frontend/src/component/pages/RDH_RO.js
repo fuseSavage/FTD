@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import Axios from 'axios'
 import { Card, Button, Col, Container, Form, Table } from 'react-bootstrap'
-import ReactExport from 'react-data-export';
+// import ReactExport from 'react-data-export';
 // import { Link } from 'react-router-dom';
 import { TiInputChecked } from 'react-icons/ti';
 
 
-// import Parser from 'html-react-parser';
+import Parser from 'html-react-parser';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
@@ -88,8 +88,6 @@ export default function RDH_RO(props) {
         valueswof[index] = event.target.value;
         setinputFieldWOF(valueswof);
     };
-    const [newbuildType, setNewbuildType] = useState();
-    const [newpersurface, setNewpersurface] = useState();
     const [sw, setSW] = useState();
     const [fw, setfw] = useState();
     const [newtestON, setNewtestON] = useState();
@@ -129,25 +127,70 @@ export default function RDH_RO(props) {
         setinputFieldWOF(allWOF_0);
     }
 
-    const [datahave_qty, setDatahave_QTY] = useState([]);
+    //Start HGA shipment detail//
+    const [inputFields1, setinputFieldS1] = useState([])
+    const handleInputS1 = (index, event) => {
+        const values1 = [...inputFields1];
+        values1[index] = event.target.value;
+        setinputFieldS1(values1);
+    };
+    const [inputFields2, setinputFieldS2] = useState([])
+    const handleInputS2 = (index, event) => {
+        const values = [...inputFields2];
+        values[index] = event.target.value;
+        setinputFieldS2(values);
+    };
+    const [inputFields3, setinputFieldS3] = useState([])
+    const handleInputS3 = (index, event) => {
+        const values = [...inputFields3];
+        values[index] = event.target.value;
+        setinputFieldS3(values);
+    };
+    const [inputFields4, setinputFieldS4] = useState([])
+    const handleInputS4 = (index, event) => {
+        const values = [...inputFields4];
+        values[index] = event.target.value;
+        setinputFieldS4(values);
+    };
+    const [inputFields5, setinputFieldS5] = useState([])
+    const handleInputS5 = (index, event) => {
+        const values = [...inputFields5];
+        values[index] = event.target.value;
+        setinputFieldS5(values);
+    };
+    const [inputFields6, setinputFieldS6] = useState([])
+    const handleInputS6 = (index, event) => {
+        const values = [...inputFields6];
+        values[index] = event.target.value;
+        setinputFieldS6(values);
+    };
+    const [inputFields7, setinputFieldS7] = useState([])
+    const handleInputS7 = (index, event) => {
+        const values = [...inputFields7];
+        values[index] = event.target.value;
+        setinputFieldS7(values);
+    };
+    const [inputFields8, setinputFieldS8] = useState([])
+    const handleInputS8 = (index, event) => {
+        const values = [...inputFields8];
+        values[index] = event.target.value;
+        setinputFieldS8(values);
+    };
+    //End HGA shipment detail//
+
+
     const [action, setAction] = useState();
     let sum_qty = 0;
     let no_Bo = 0;
+    let valuesurface = 0;
+    let newValues = [];
 
     const preview = () => {
         setNewmedia(media)
         setNewtestON(testON)
         setSW(swfw[0])
         setfw(swfw[1])
-        setNewpersurface(persurface)
-        setNewbuildType(type)
-        setAction(true)
         console.log('data', selectdataList)
-        console.log('datainput', datainput)
-        setAction(
-            <TabResult />
-        )
-
         const Nqty = inputFieldQTY.map(Number);
         for (let i = 0; i < inputFieldQTY.length; i++) {
             if (Nqty[i] > 1) {
@@ -155,21 +198,20 @@ export default function RDH_RO(props) {
                 no_Bo = no_Bo + 1
             }
         }
-        // const data_Qty = [...datahave_qty];
-        for (let i = 0; i < selectdataList.length; i++) {
-            console.log(selectdataList[i].HGA_BO)
-            if (inputFieldQTY[i] != 0 && inputFieldQTY[i] != null) {
-
-                // data_Qty[i] = selectdataList[i]
-                // setDatahave_QTY(data_Qty[i])
-                console.log('newdata', selectdataList[i])
-
-            }
-
+        if (sum_qty != 0) {
+            valuesurface = Math.ceil(sum_qty / persurface)
         }
-        // console.log(datahave_qty)
-
+        for (let i = 0; i < selectdataList.length; i++) {
+            if (inputFieldQTY[i] != 0 && inputFieldQTY[i] != null) {
+                newValues.push(selectdataList[i])
+            }
+        }
+        setAction(
+            <TabResult />
+        )
+        console.log('new', newValues)
     }
+
     const datainput = [{
         qty: inputFieldQTY,
         wof: inputFieldWOF,
@@ -180,44 +222,145 @@ export default function RDH_RO(props) {
         testON: testON,
         media: media,
     }]
-
+    const send = () => {
+        console.log(inputFields1)
+        console.log(inputFields2)
+        console.log(inputFields3)
+        console.log(inputFields4)
+        console.log(inputFields5)
+        console.log(inputFields6)
+        console.log(inputFields7)
+        console.log(inputFields8)
+        console.log(inputFieldQTY)
+        console.log('datainput', datainput)
+    }
 
     const TabResult = () => {
         return (
-            <Container style={{ marginBottom: '20px', marginTop: '20px' }}>
-                <Table hover style={{ width: '280px', border: '2px solid black' }}>
-                    <tbody style={{ border: '2px solid black' }}>
-                        <td style={{ backgroundColor: '#8ED1FC' }}><strong>Bin</strong></td>
-                        <td>{selectdataList[0].EXP_ID}</td>
-                    </tbody>
-                    <tbody style={{ border: '2px solid black' }}>
-                        <td style={{ backgroundColor: '#8ED1FC' }}><strong>Product</strong></td>
-                        <td>{selectdataList[0].BLD_INTENT_PLATFORM}</td>
-                    </tbody>
-                    <tbody style={{ border: '2px solid black' }}>
-                        <td style={{ backgroundColor: '#8ED1FC' }}><strong>Bin QTY</strong></td>
-                        <td>{sum_qty}</td>
-                    </tbody>
-                    <tbody style={{ border: '2px solid black' }}>
-                        <td style={{ backgroundColor: '#8ED1FC' }}><strong>No. BO</strong></td>
-                        <td>{no_Bo}</td>
-                    </tbody>
-                    <tbody style={{ border: '2px solid black' }}>
-                        <td style={{ backgroundColor: '#8ED1FC' }}><strong>No. surface</strong></td>
-                        <td>????</td>
-                    </tbody>
-                    <tbody style={{ border: '2px solid black' }}>
-                        <td style={{ backgroundColor: '#8ED1FC' }}><strong>Unit per. surface</strong></td>
-                        <td>{persurface}</td>
-                    </tbody>
-                </Table>
-            </Container>
+            <div>
+                {persurface > 0 ? (
+                    <Container style={{ marginBottom: '20px', marginTop: '20px' }}>
+                        <Table hover style={{ width: '280px', border: '2px solid black' }}>
+                            <tbody style={{ border: '2px solid black' }}>
+                                <td style={{ backgroundColor: '#8ED1FC' }}><strong>Bin</strong></td>
+                                <td>{selectdataList[0].EXP_ID}</td>
+                            </tbody>
+                            <tbody style={{ border: '2px solid black' }}>
+                                <td style={{ backgroundColor: '#8ED1FC' }}><strong>Product</strong></td>
+                                <td>{selectdataList[0].BLD_INTENT_PLATFORM}</td>
+                            </tbody>
+                            <tbody style={{ border: '2px solid black' }}>
+                                <td style={{ backgroundColor: '#8ED1FC' }}><strong>Bin QTY</strong></td>
+                                <td>{sum_qty}</td>
+                            </tbody>
+                            <tbody style={{ border: '2px solid black' }}>
+                                <td style={{ backgroundColor: '#8ED1FC' }}><strong>No. BO</strong></td>
+                                <td>{no_Bo}</td>
+                            </tbody>
+                            <tbody style={{ border: '2px solid black' }}>
+                                <td style={{ backgroundColor: '#8ED1FC' }}><strong>No. surface</strong></td>
+                                <td>{valuesurface}</td>
+                            </tbody>
+                            <tbody style={{ border: '2px solid black' }}>
+                                <td style={{ backgroundColor: '#8ED1FC' }}><strong>Unit per. surface</strong></td>
+                                <td>{persurface}</td>
+                            </tbody>
+                        </Table>
+
+                        <div>
+                            <h6><b>HGA shipment detail</b></h6>
+                            <Table hover responsive bordered style={{ textAlign: 'center' }} >
+                                <thead style={{ backgroundColor: '#FD980A' }}>
+                                    <th>BO</th>
+                                    <th>s1</th>
+                                    <th>s2</th>
+                                    <th>s3</th>
+                                    <th>s4</th>
+                                    <th>s5</th>
+                                    <th>s6</th>
+                                    <th>s7</th>
+                                    <th>s8</th>
+                                </thead>
+                                <tbody>
+                                    {newValues.map((val, index) => {
+                                        return (
+                                            <tr>
+                                                <td>{val.HGA_BO}</td>
+                                                <td><input type="number" value={inputFields1[index]} onChange={event => {
+                                                    handleInputS1(
+                                                        index,
+                                                        event
+                                                    );
+                                                }} style={{ width: '60px' }} /></td>
+                                                <td><input type="number" value={inputFields2[index]} onChange={event => {
+                                                    handleInputS2(
+                                                        index,
+                                                        event
+                                                    );
+                                                }} style={{ width: '60px' }} /></td>
+                                                <td><input type="number" value={inputFields3[index]} onChange={event => {
+                                                    handleInputS3(
+                                                        index,
+                                                        event
+                                                    );
+                                                }} style={{ width: '60px' }} /></td>
+                                                <td><input type="number" value={inputFields4[index]} onChange={event => {
+                                                    handleInputS4(
+                                                        index,
+                                                        event
+                                                    );
+                                                }} style={{ width: '60px' }} /></td>
+                                                <td><input type="number" value={inputFields5[index]} onChange={event => {
+                                                    handleInputS5(
+                                                        index,
+                                                        event
+                                                    );
+                                                }} style={{ width: '60px' }} /></td>
+                                                <td><input type="number" value={inputFields6[index]} onChange={event => {
+                                                    handleInputS6(
+                                                        index,
+                                                        event
+                                                    );
+                                                }} style={{ width: '60px' }} /></td>
+                                                <td><input type="number" value={inputFields7[index]} onChange={event => {
+                                                    handleInputS7(
+                                                        index,
+                                                        event
+                                                    );
+                                                }} style={{ width: '60px' }} /></td>
+                                                <td><input type="number" value={inputFields8[index]} onChange={event => {
+                                                    handleInputS8(
+                                                        index,
+                                                        event
+                                                    );
+                                                }} style={{ width: '60px' }} /></td>
+                                            </tr>
+                                        )
+                                    })}
+                                </tbody>
+                            </Table>
+                        </div>
+
+                        <div>
+                            <Table>
+                                <thead style={{ backgroundColor: '#FD980A' }} >
+                                    <th>No</th>
+                                    <th>BO</th>
+                                    <th>Tab</th>
+
+                                </thead>
+                            </Table>
+                        </div>
+                        <Button variant="outline-warning" onClick={send} style={{ marginTop: '20px' }}>Send</Button>
+                    </Container>
+                ) : null}
+            </div>
         )
     }
 
     return (
         <div style={{ marginTop: '6%' }}>
-            <Container>
+            <div className='container'>
                 <h3>Create Build Flow RDH RO</h3>
                 {selectdataList.length === 0 ? (
                     <Container>
@@ -244,7 +387,7 @@ export default function RDH_RO(props) {
                 ) : null}
 
                 {selectdataList.length !== 0 ? (
-                    <Container style={{ marginBottom: '20px', marginTop: '20px' }}>
+                    <div className='container'>
                         <div>
                             <Table responsive hover style={{ width: '280px', border: '2px solid black' }}>
                                 <tbody style={{ border: '2px solid black' }}>
@@ -275,7 +418,7 @@ export default function RDH_RO(props) {
 
                         <div>
                             <Table hover responsive bordered style={{ textAlign: 'center' }} >
-                                <thead style={{ backgroundColor: '#8ED1FC' }}>
+                                <thead style={{ backgroundColor: '#8ED1FC' }} >
                                     <th>No.</th>
                                     <th>BIN</th>
                                     <th>PREFIX</th>
@@ -284,7 +427,7 @@ export default function RDH_RO(props) {
                                     <th>SBR</th>
                                     <th>AABdesign</th>
                                     <th>Qty
-                                <input type="number" onChange={event => {
+                                        <input type="number" onChange={event => {
                                             handleInputAll(event)
                                         }} style={{ width: '60px' }} />
                                         <a type='button'><TiInputChecked size={20} onClick={useClickQTY} /></a>
@@ -292,7 +435,7 @@ export default function RDH_RO(props) {
                                     <th>SEQ#/OldBO</th>
                                     <th>W/O</th>
                                     <th>WorkOrderFile
-                                <input type="number" onChange={event => {
+                                        <input type="number" onChange={event => {
                                             handleInputAllWOF(event)
                                         }} style={{ width: '60px' }} />
                                         <a type='button' onClick={useClickWOF} ><TiInputChecked size={20} /></a>
@@ -330,7 +473,7 @@ export default function RDH_RO(props) {
                                                 <td>{val.SLD_BO}</td>
                                                 <td>{val.BUILDGROUP}{val.HGA_BO.slice(3)}{val.PARM_HGA_TAB[0]}</td>
                                                 <td>{val.BUILDGROUP}{val.HGA_BO.slice(3)}{val.PARM_HGA_TAB[0]}-
-                                            <input type="number" value={inputFieldWOF[index]} onChange={event => {
+                                                    <input type="number" value={inputFieldWOF[index]} onChange={event => {
                                                         handleInputWOF(
                                                             index,
                                                             event
@@ -358,7 +501,7 @@ export default function RDH_RO(props) {
 
                         <div style={{ marginTop: '20px' }}>
                             <p>BUILD TYPE :
-                            <select value={type} onChange={handleSelectType} >
+                                <select value={type} onChange={handleSelectType} >
                                     <option value="PRIME BUILD">PRIME BUILD</option>
                                     <option value="WSAT">WSAT</option>
                                     <option value="DVT Retest">DVT Retest</option>
@@ -366,13 +509,13 @@ export default function RDH_RO(props) {
                             </p>
 
                             <p>Set HGA BO Per surface :
-                            <input type="number" value={persurface} onChange={(event) => {
+                                <input type="number" value={persurface} onChange={(event) => {
                                     setPersurface(event.target.value);
                                 }} style={{ width: '100px' }} />
                             </p>
 
                             <p>SW/FW :
-                            <select value={newswfw} onChange={handleSelectSWFW} >
+                                <select value={newswfw} onChange={handleSelectSWFW} >
                                     <option value='4.51B213/SHF 1.6.1.246'>4.51B213 / SHF 1.6.1.246</option>
                                     <option value='WITE4.51B121/SHF 1.6.1.187'>WITE4.51B121 / SHF 1.6.1.187</option>
                                     <option value='SW4.51B121/SHF 1.6.1.161'>SW4.51B121 / SHF 1.6.1.161</option>
@@ -381,13 +524,13 @@ export default function RDH_RO(props) {
                             </p>
 
                             <p>1) Build flow สำหรับ Test งาน {selectdataList.length} BOs กลุ่ม RO-02359 จะ ทำการ Test บน เครื่อง
-                            <input type="text" value={testON} onChange={(event) => {
+                                <input type="text" value={testON} onChange={(event) => {
                                     setTestON(event.target.value);
                                 }} style={{ width: '500px' }} />
                             </p>
 
                             <p>- ลำดับการ test ในแต่ละ Surf.
-                            <p style={{ marginLeft: '25px' }}><strong>* Surf. ที่เป็นเลขคี่ให้เริ่ม test จาก Tab DN ให้หมดก่อน (Surf. 1, 3, 5, ... )</strong></p>
+                                <p style={{ marginLeft: '25px' }}><strong>* Surf. ที่เป็นเลขคี่ให้เริ่ม test จาก Tab DN ให้หมดก่อน (Surf. 1, 3, 5, ... )</strong></p>
                                 <p style={{ marginLeft: '25px' }}><strong>* Surf. ที่เป็นเลขคู่ให้เริ่ม test จาก Tab UP ให้หมดก่อน (Surf. 2, 4, 6, ....)</strong></p>
                             </p>
 
@@ -416,12 +559,14 @@ export default function RDH_RO(props) {
                             state: { datainput: datainput, dataselect: selectdataList }
                         }}
                     ><Button variant="outline-warning" style={{ marginTop: '20px' }}>Test</Button></Link> */}
+
                         <div>
                             {action}
                         </div>
-                    </Container>
+                        {/* <Button variant="outline-warning" style={{ marginTop: '20px' }} onClick={test}>Test</Button> */}
+                    </div>
                 ) : null}
-            </Container>
+            </div>
         </div>
     )
 }

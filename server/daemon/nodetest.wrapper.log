@@ -1,0 +1,16 @@
+2021-06-14 15:29:03 - Starting C:\Program Files\nodejs\node.exe  --harmony C:\Users\931897\AppData\Roaming\npm\node_modules\node-windows\lib\wrapper.js --file "C:\Users\931897\Desktop\Project Seagate\FTD\server\index.js" --scriptoptions= --log "nodetest wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2021-06-14 15:29:03 - Started 16076
+2021-06-14 15:32:20 - Stopping nodetest.exe
+2021-06-14 15:32:20 - ProcessKill 16076
+2021-06-14 15:32:21 - Found child process: 18240 Name: conhost.exe
+2021-06-14 15:32:21 - Found child process: 16200 Name: node.exe
+2021-06-14 15:32:21 - Stopping process 18240
+2021-06-14 15:32:21 - Send SIGINT 18240
+2021-06-14 15:32:21 - SIGINT to 18240 failed - Killing as fallback
+2021-06-14 15:32:21 - Stopping process 16200
+2021-06-14 15:32:21 - Send SIGINT 16200
+2021-06-14 15:32:21 - SIGINT to 16200 failed - Killing as fallback
+2021-06-14 15:32:21 - Stopping process 16076
+2021-06-14 15:32:21 - Send SIGINT 16076
+2021-06-14 15:32:21 - SIGINT to 16076 failed - Killing as fallback
+2021-06-14 15:32:21 - Finished nodetest.exe
