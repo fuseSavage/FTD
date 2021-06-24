@@ -9,7 +9,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 export default function L_Slider_HGA(props) {
-    const { datalist } = props;
+    const { datalist, swfw2 } = props;
     const [EXP_ID, SetEXP_ID] = useState("");
     const [selectdataList, setSelectdataList] = useState([]);
     const [product, setProduct] = useState('');
@@ -495,11 +495,12 @@ export default function L_Slider_HGA(props) {
                             </p>
 
                             <p>SW/FW :
-                        <select value={newswfw} onChange={handleSelectSWFW} >
-                                    <option value='4.51B213/SHF 1.6.1.246'>4.51B213 / SHF 1.6.1.246</option>
-                                    <option value='WITE4.51B121/SHF 1.6.1.187'>WITE4.51B121 / SHF 1.6.1.187</option>
-                                    <option value='SW4.51B121/SHF 1.6.1.161'>SW4.51B121 / SHF 1.6.1.161</option>
-                                    <option value='WITE450B901/SHF1.6.1.141'>WITE450B901 / SHF1.6.1.141</option>
+                                <select value={newswfw} onChange={handleSelectSWFW} >
+                                    {swfw2.map((val, index) => {
+                                        return (
+                                            <option value={val.swfw}>{val.swfw}</option>
+                                        )
+                                    })}
                                 </select>
                             </p>
 

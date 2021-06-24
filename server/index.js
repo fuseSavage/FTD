@@ -12,7 +12,7 @@ const path = require('path');
 const app = express();
 app.use(cookieParser());
 app.use(cors({
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST", "DELETE"],
     credentials: true,
     origin: ['http://localhost:3000', 'http://localhost:8080', 'http://localhost:4200']
 }));
@@ -22,11 +22,11 @@ app.use(express.json());
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, "../frontend/public/uploads");
+        cb(null, "./uploads/images");
     },
     filename: function (req, file, cb) {
         const ext = file.mimetype.split("/")[1];
-        cb(null, `images/${Date.now()}-${file.originalname}`);
+        cb(null, `${Date.now()}-${file.originalname}`);
     }
 });
 const upload = multer({
@@ -46,6 +46,13 @@ const db = mysql.createConnection({
     host: "localhost",
     password: "root11549",
     database: "demoautodb",
+});
+
+const imgdb = mysql.createConnection({
+    user: "root",
+    host: "localhost",
+    password: "root11549",
+    database: "images",
 });
 
 const db2 = mysql.createConnection({
@@ -155,22 +162,56 @@ app.post('/pushflow', (req, res) => {
             })
     }
 })
+app.get('/check-title', (req, res) => {
+    imgdb.query(`SHOW TABLES`, (err, result) => {
+        if (err) {
+            console.log('err', err)
+        } else {
+            res.send(result)
+        }
+    })
+})
 
-app.post('/uploadimg', upload.array('imagesArray'), (req, res, err) => {
-    
+app.post('/uploadimg', upload.array('imagesArray'), (req, res) => {
     const title = req.query.title;
     const images = req.files;
     let reqFiles = [];
-    // filename = path.basename('/Users/Refsnes/demo_path.js');
-    // console.log(process.env.PATH)
+
+   
+
+    imgdb.query(`SELECT * FROM ${title}`, (error) => {
+        if (error) {
+            for (let i = 0; i < images.length; i++) {
+                reqFiles.push(images[i].filename)
+                imgdb.query(`CREATE TABLE ${title} (id INT AUTO_INCREMENT PRIMARY KEY, images VARCHAR(255))`, (err) => {
+                    if (err) {
+                        imgdb.query(`INSERT INTO ${title} (images) VALUES ("${reqFiles[i]}")`, (err) => {
+                            if (err) {
+                                console.log('Insert ', err)
+                            } else {
+                                console.log('Insert Complated 1', reqFiles[i])
+                            }
+                        })
+                    } else {
+                        imgdb.query(`INSERT INTO ${title} (images) VALUES ("${reqFiles[i]}")`, (err) => {
+                            if (err) {
+                                console.log('Insert ', err)
+                            } else {
+                                console.log('Insert Complated 2', reqFiles[i])
+                            }
+                        })
+                    }
+                })
+            }
+        } else {
+            res.send({message: 'This name already exists, please rename it.'})
+        }
+    })
+})
 
 
-
-    for (let i = 0; i < images.length; i++) {
-        reqFiles.push( path.basename(images[i].filename))
-    }
-    console.log(title, reqFiles)
-    // const data = req.body.formData
+app.get('/getimage/:name', (req, res) => {
+    res.sendFile(path.resolve(__dirname, `./uploads/images/${req.params.name}`));
 })
 
 // AND password = "${password}"
@@ -230,6 +271,44 @@ app.post('/logout', (req, res) => {
     res.send({
         message: 'success'
     })
+})
+
+app.post('/sw-fw', (req, res) => {
+    const sw_fw = req.query.sw_fw;
+    // console.log(sw_fw)
+    db.query(`INSERT INTO sw_fw (swfw) VALUES (?)`, [sw_fw],
+        (err, result) => {
+            if (err) {
+                res.send({ message: 'Insert fail :(' })
+            } else {
+                res.send({ message: 'successfully added to the list :)' })
+            }
+        })
+})
+
+app.get('/getswfw', (req, res) => {
+    db.query(`SELECT * FROM sw_fw`,
+        (err, result) => {
+            if (err) {
+                console.log(err);
+                res.send(err);
+            } else {
+                res.send(result);
+                // console.log(result)
+            }
+        })
+})
+
+app.delete('/delswfw', (req, res) => {
+    const id = req.query.id;
+    db.query(`DELETE FROM sw_fw WHERE id = ?`, [id],
+        (err, result) => {
+            if (err) {
+                console.log(err)
+            } else {
+                res.send({ message: 'successfully deleted' })
+            }
+        })
 })
 
 app.listen('3001', () => {

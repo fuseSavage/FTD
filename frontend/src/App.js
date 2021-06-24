@@ -21,6 +21,8 @@ import AMA_L_Slider from './component/pages/AMA_L_Slider';
 import L_Slider_SDET from './component/pages/L_Slider_SDET';
 import L_Slider_HGA from './component/pages/L_Slider_HGA';
 import AddImg from './component/pages/configurations/AddImg';
+import Setting_SW_FW from './component/pages/configurations/Setting_SW_FW';
+// import axios from 'axios';
 
 const drawerWidth = 240;
 
@@ -61,119 +63,131 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function App(props) {
-  
+
   const { window } = props;
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const [datalist, setDataList] = useState('');
-  // const [status, setStatus] = useState(false);
+  const [swfw, setSWFW] = useState();
+  // const [swfwSplit, setSWFWSplit] = useState([]);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
   useEffect(() => {
-    (
-      async () => {
-        const response = await fetch(`http://localhost:3001/user`, {
-          headers: { 'content-Type': 'application/json' },
-          credentials: 'include',
-        });
-        const content = await response.json()
-        // console.log(content.message)
-        if (!content.message) {
-          setDataList(content[0].name)
-          // console.log(datalist)
-        }
+    async function fetchData() {
+      const response = await fetch(`http://localhost:3001/user`, {
+        method: 'GET',
+        headers: { 'content-Type': 'application/json' },
+        credentials: 'include',
+      });
+      const getswfw = await fetch(`http://localhost:3001/getswfw`, {
+        method: 'GET',
+        headers: { 'content-Type': 'application/json' },
+        credentials: 'include',
+      });
+
+      const content = await response.json()
+      if (!content.message) {
+        setDataList(content[0].name)
       }
-    )();
-  });
+
+      const content2 = await getswfw.json()
+      setSWFW(content2)
+      // for (let i = 0; i < content2.length; i++) {
+      //   setSWFWSplit(arr => [...arr, content2[i].swfw.split('/')])
+      // }
+    }
+    fetchData();
+  }, [])
 
   const container = window !== undefined ? () => window().document.body : undefined;
-
-return (
-  <Router>
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            className={classes.menuButton}
-          >
-            <BiMenu />
-          </IconButton>
-          <Button variant="default" href="/home">
-            <Typography variant="h6" style={{ color: 'white' }}>
-              RHT Automated Buildflow
+  return (
+    <Router>
+      <div className={classes.root}>
+        <CssBaseline />
+        <AppBar position="fixed" className={classes.appBar}>
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              className={classes.menuButton}
+            >
+              <BiMenu />
+            </IconButton>
+            <Button variant="default" href="/home">
+              <Typography variant="h6" style={{ color: 'white' }}>
+                RHT Automated Buildflow
               </Typography>
-          </Button>
-        </Toolbar>
-      </AppBar>
+            </Button>
+          </Toolbar>
+        </AppBar>
 
 
-      <nav className={classes.drawer} aria-label="mailbox folders">
-        <Hidden smUp implementation="css">
-          <Drawer
-            container={container}
-            variant="temporary"
-            anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-            open={mobileOpen}
-            onClose={handleDrawerToggle}
-            classes={{
-              paper: classes.drawerPaper,
-            }}
-            ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
-            }}
-          >
-            <Drawers datalist={datalist} />
-          </Drawer>
-        </Hidden>
-        <Hidden mdDown implementation="css">
-          <Drawer
-            classes={{
-              paper: classes.drawerPaper,
-            }}
-            variant="permanent"
-            open
-          >
-            <Drawers datalist={datalist} />
-          </Drawer>
-        </Hidden>
-      </nav>
-      {/* <Login /> */}
+        <nav className={classes.drawer} aria-label="mailbox folders">
+          <Hidden smUp implementation="css">
+            <Drawer
+              container={container}
+              variant="temporary"
+              anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+              open={mobileOpen}
+              onClose={handleDrawerToggle}
+              classes={{
+                paper: classes.drawerPaper,
+              }}
+              ModalProps={{
+                keepMounted: true, // Better open performance on mobile.
+              }}
+            >
+              <Drawers datalist={datalist} />
+            </Drawer>
+          </Hidden>
+          <Hidden mdDown implementation="css">
+            <Drawer
+              classes={{
+                paper: classes.drawerPaper,
+              }}
+              variant="permanent"
+              open
+            >
+              <Drawers datalist={datalist} />
+            </Drawer>
+          </Hidden>
+        </nav>
+        {/* <Login /> */}
 
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-        
-        <Switch>
-          <Route path='/' exact component={Home}></Route>
-          <Route path='/home' exact component={() => <Home datalist={datalist} />}></Route>
-          <Route path='/rdhro' exact component={() => <RDH_RO datalist={datalist} />}></Route>
-          <Route path='/rdhsdet' exact component={() => <RDH_SDET datalist={datalist} />}></Route>
-          <Route path='/rdhhga' exact component={() => <RDH_HGA datalist={datalist} />}></Route>
-          <Route path='/amasdet' exact component={() => <AMA_SDET datalist={datalist} />}></Route>
-          <Route path='/amahga' exact component={() => <AMA_HGA datalist={datalist} />}></Route>
-          <Route path='/amasld' exact component={() => <AMA_L_Slider datalist={datalist} />}></Route>
-          <Route path='/sldsdet' exact component={() => <L_Slider_SDET datalist={datalist} />}></Route>
-          <Route path='/sldhga' exact component={() => <L_Slider_HGA datalist={datalist} />}></Route>
+        <main className={classes.content}>
+          <div className={classes.toolbar} />
 
-          <Route path='/flowro' exact component={() => <Flow_RDH_RO />}></Route>
+          <Switch>
+            <Route path='/' exact component={Home}></Route>
+            <Route path='/home' exact component={() => <Home datalist={datalist} />}></Route>
+            <Route path='/rdhro' exact component={() => <RDH_RO datalist={datalist} swfw2={swfw} />}></Route>
+            <Route path='/rdhsdet' exact component={() => <RDH_SDET datalist={datalist} swfw2={swfw} />}></Route>
+            <Route path='/rdhhga' exact component={() => <RDH_HGA datalist={datalist} swfw2={swfw} />}></Route>
+            <Route path='/amasdet' exact component={() => <AMA_SDET datalist={datalist} swfw2={swfw} />}></Route>
+            <Route path='/amahga' exact component={() => <AMA_HGA datalist={datalist} swfw2={swfw} />}></Route>
+            <Route path='/amasld' exact component={() => <AMA_L_Slider datalist={datalist} swfw2={swfw} />}></Route>
+            <Route path='/sldsdet' exact component={() => <L_Slider_SDET datalist={datalist} swfw2={swfw} />}></Route>
+            <Route path='/sldhga' exact component={() => <L_Slider_HGA datalist={datalist} swfw2={swfw} />}></Route>
 
-          <Route path='/addimg' exact component={AddImg} ></Route>
-        </Switch>
-        <Footer />
-      </main>
-    </div>
-    
-  </Router>
-);
+            <Route path='/flowro' exact component={() => <Flow_RDH_RO />}></Route>
+
+            <Route path='/addimg' exact component={AddImg} ></Route>
+            <Route path='/set-sw-fw' exact component={Setting_SW_FW}></Route>
+
+          </Switch>
+          <Footer />
+        </main>
+      </div>
+
+    </Router>
+  );
 }
 
 export default App;

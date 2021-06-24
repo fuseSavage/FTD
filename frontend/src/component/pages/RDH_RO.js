@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Axios from 'axios'
 import { Card, Button, Col, Container, Form, Table } from 'react-bootstrap'
 // import ReactExport from 'react-data-export';
@@ -18,7 +18,7 @@ import 'react-quill/dist/quill.snow.css';
 
 
 export default function RDH_RO(props) {
-    const { datalist } = props;
+    const { datalist, swfw2 } = props;
     const [selectdataList, setSelectdataList] = useState([]);
     const [EXP_ID, SetEXP_ID] = useState("");
 
@@ -57,6 +57,14 @@ export default function RDH_RO(props) {
         }
     ]
 
+    // useEffect(()=> {
+    //     async function fetchData() {
+    //         console.log('fetchData',swfw2)
+    //     }
+    //     fetchData();
+    // }, [])
+
+    
     const [type, setTYPE] = useState("PRIME BUILD");
     const handleSelectType = (e) => {
         setTYPE(e.target.value)
@@ -516,10 +524,11 @@ export default function RDH_RO(props) {
 
                             <p>SW/FW :
                                 <select value={newswfw} onChange={handleSelectSWFW} >
-                                    <option value='4.51B213/SHF 1.6.1.246'>4.51B213 / SHF 1.6.1.246</option>
-                                    <option value='WITE4.51B121/SHF 1.6.1.187'>WITE4.51B121 / SHF 1.6.1.187</option>
-                                    <option value='SW4.51B121/SHF 1.6.1.161'>SW4.51B121 / SHF 1.6.1.161</option>
-                                    <option value='WITE450B901/SHF1.6.1.141'>WITE450B901 / SHF1.6.1.141</option>
+                                    {swfw2.map((val, index) => {
+                                        return (
+                                            <option value={val.swfw}>{val.swfw}</option>
+                                        )
+                                    })}
                                 </select>
                             </p>
 
