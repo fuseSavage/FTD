@@ -11,12 +11,8 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 
-
 // const ExcelFile = ReactExport.ExcelFile;
 // const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
-
-
-
 export default function RDH_SDET(props) {
     const { datalist, swfw2 } = props;
     const [selectdataList, setSelectdataList] = useState([]);

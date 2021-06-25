@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
-import { Button, Col, Container, Table } from 'react-bootstrap';
+// import { Button, Col, Container, Table } from 'react-bootstrap';
 
 import { useLocation } from 'react-router-dom';
 
 export default function Flow_RDH_RO() {
 
-    const datainput = useLocation().state.datainput[0];
-    const dataselect = useLocation().state.dataselect;
+    const name = useLocation().state.name;
+    // const dataselect = useLocation().state.dataselect;
 
-    console.log(datainput)
-    console.log(dataselect)
+    console.log(name)
+    // console.log(dataselect)
 
 
     // const preview = datainput => {
@@ -18,7 +18,7 @@ export default function Flow_RDH_RO() {
 
     return (
         <div >
-            <h3>Flow RDH RO</h3>
+            {/* <h3>Flow RDH RO</h3>
                 {datainput.length !== 0 ? (
                     <Container style={{ marginBottom: '5%', marginTop: '2%', marginLeft: '10px', marginRight: '20px'}}>
                         <Table hover bordered>
@@ -77,7 +77,7 @@ export default function Flow_RDH_RO() {
                         </Table>
                     </Container>
                 ) : null}
-            
+             */}
             
         </div>
     )

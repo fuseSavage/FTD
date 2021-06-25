@@ -176,9 +176,6 @@ app.post('/uploadimg', upload.array('imagesArray'), (req, res) => {
     const title = req.query.title;
     const images = req.files;
     let reqFiles = [];
-
-   
-
     imgdb.query(`SELECT * FROM ${title}`, (error) => {
         if (error) {
             for (let i = 0; i < images.length; i++) {
@@ -204,14 +201,28 @@ app.post('/uploadimg', upload.array('imagesArray'), (req, res) => {
                 })
             }
         } else {
-            res.send({message: 'This name already exists, please rename it.'})
+            res.send({ message: 'This name already exists, please rename it.' })
         }
     })
 })
 
 
-app.get('/getimage/:name', (req, res) => {
-    res.sendFile(path.resolve(__dirname, `./uploads/images/${req.params.name}`));
+app.get('/getImage/:name', (req, res) => {
+    const name = req.query.name;
+
+    if (name != undefined) {
+        // console.log(name)
+        imgdb.query(`SELECT * FROM ${name}`, (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                // console.log('ข้อมูล คือ ', result)
+                res.send(result);
+                
+            }
+        })
+    }
+    // res.sendFile(path.resolve(__dirname, `./uploads/images/${req.params.name}`));
 })
 
 // AND password = "${password}"
@@ -309,6 +320,35 @@ app.delete('/delswfw', (req, res) => {
                 res.send({ message: 'successfully deleted' })
             }
         })
+})
+
+app.delete('/deleteTitle', (req, res) => {
+    const name = req.query.name;
+    imgdb.query(`DROP TABLE ${name}`, (err) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send({
+                message: 'Successfully Deleted'
+            })
+        }
+    })
+})
+
+app.delete('/deleteItem', (req, res) => {
+    const id = req.query.id;
+    const title = req.query.title;
+    console.log(id, title)
+
+    imgdb.query(`DELETE FROM ${title} WHERE id = ${id}`, (err) => {
+        if (err) {
+            console.log(err)
+        } else {
+            res.send({
+                message: 'Successfully Deleted'
+            })
+        }
+    })
 })
 
 app.listen('3001', () => {

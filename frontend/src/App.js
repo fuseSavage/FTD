@@ -22,6 +22,7 @@ import L_Slider_SDET from './component/pages/L_Slider_SDET';
 import L_Slider_HGA from './component/pages/L_Slider_HGA';
 import AddImg from './component/pages/configurations/AddImg';
 import Setting_SW_FW from './component/pages/configurations/Setting_SW_FW';
+import ShowImage from './component/pages/configurations/ShowImage';
 // import axios from 'axios';
 
 const drawerWidth = 240;
@@ -180,6 +181,7 @@ function App(props) {
 
             <Route path='/addimg' exact component={AddImg} ></Route>
             <Route path='/set-sw-fw' exact component={Setting_SW_FW}></Route>
+            <Route path='/showimage' exact component={ShowImage}></Route>
 
           </Switch>
           <Footer />
