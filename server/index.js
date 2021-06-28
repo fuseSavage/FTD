@@ -172,58 +172,6 @@ app.get('/check-title', (req, res) => {
     })
 })
 
-app.post('/uploadimg', upload.array('imagesArray'), (req, res) => {
-    const title = req.query.title;
-    const images = req.files;
-    let reqFiles = [];
-    imgdb.query(`SELECT * FROM ${title}`, (error) => {
-        if (error) {
-            for (let i = 0; i < images.length; i++) {
-                reqFiles.push(images[i].filename)
-                imgdb.query(`CREATE TABLE ${title} (id INT AUTO_INCREMENT PRIMARY KEY, images VARCHAR(255))`, (err) => {
-                    if (err) {
-                        imgdb.query(`INSERT INTO ${title} (images) VALUES ("${reqFiles[i]}")`, (err) => {
-                            if (err) {
-                                console.log('Insert ', err)
-                            } else {
-                                console.log('Insert Complated 1', reqFiles[i])
-                            }
-                        })
-                    } else {
-                        imgdb.query(`INSERT INTO ${title} (images) VALUES ("${reqFiles[i]}")`, (err) => {
-                            if (err) {
-                                console.log('Insert ', err)
-                            } else {
-                                console.log('Insert Complated 2', reqFiles[i])
-                            }
-                        })
-                    }
-                })
-            }
-        } else {
-            res.send({ message: 'This name already exists, please rename it.' })
-        }
-    })
-})
-
-
-app.get('/getImage/:name', (req, res) => {
-    const name = req.query.name;
-
-    if (name != undefined) {
-        // console.log(name)
-        imgdb.query(`SELECT * FROM ${name}`, (err, result) => {
-            if (err) {
-                console.log(err);
-            } else {
-                // console.log('ข้อมูล คือ ', result)
-                res.send(result);
-                
-            }
-        })
-    }
-    // res.sendFile(path.resolve(__dirname, `./uploads/images/${req.params.name}`));
-})
 
 // AND password = "${password}"
 
@@ -335,6 +283,57 @@ app.delete('/deleteTitle', (req, res) => {
     })
 })
 
+app.post('/uploadimg', upload.array('imagesArray'), (req, res) => {
+    const title = req.query.title;
+    const images = req.files;
+    let reqFiles = [];
+    imgdb.query(`SELECT * FROM ${title}`, (error) => {
+        if (error) {
+            for (let i = 0; i < images.length; i++) {
+                reqFiles.push(images[i].filename)
+                imgdb.query(`CREATE TABLE ${title} (id INT AUTO_INCREMENT PRIMARY KEY, images VARCHAR(255))`, (err) => {
+                    if (err) {
+                        imgdb.query(`INSERT INTO ${title} (images) VALUES ("${reqFiles[i]}")`, (err) => {
+                            if (err) {
+                                console.log('Insert ', err)
+                            } else {
+                                console.log('Insert Complated 1', reqFiles[i])
+                            }
+                        })
+                    } else {
+                        imgdb.query(`INSERT INTO ${title} (images) VALUES ("${reqFiles[i]}")`, (err) => {
+                            if (err) {
+                                console.log('Insert ', err)
+                            } else {
+                                console.log('Insert Complated 2', reqFiles[i])
+                            }
+                        })
+                    }
+                })
+            }
+        } else {
+            res.send({ message: 'This name already exists, please rename it.' })
+        }
+    })
+})
+
+app.get('/getImage/:name', (req, res) => {
+    const name = req.query.name;
+
+    if (name != undefined) {
+        // console.log(name)
+        imgdb.query(`SELECT * FROM ${name}`, (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send(result);
+                
+            }
+        })
+    }
+    // res.sendFile(path.resolve(__dirname, `./uploads/images/${req.params.name}`));
+})
+
 app.delete('/deleteItem', (req, res) => {
     const id = req.query.id;
     const title = req.query.title;
@@ -351,6 +350,26 @@ app.delete('/deleteItem', (req, res) => {
     })
 })
 
+app.post('/changeImage', upload.array('imagesArr'), (req, res) => { 
+    const title = req.query.title;
+    const images = req.files;
+    let reqFiles = [];
+    // console.log(title)
+    // console.log(images)
+    for (let i = 0; i < images.length; i++) {
+        reqFiles.push(images[i].filename)
+
+        imgdb.query(`INSERT INTO ${title} (images) VALUES ("${reqFiles[i]}")`, (err) => {
+            if (err) {
+                console.log(err)
+            } else {
+                console.log('Insert Complated', reqFiles[i])
+            }
+        })
+    }
+
+})
+ 
 app.listen('3001', () => {
     console.log('server is running on port 3001');
 })

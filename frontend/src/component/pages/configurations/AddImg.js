@@ -29,7 +29,7 @@ export default function AddImg() {
 
     //   console.log('555', check)
 
-    const upload = async (e) => {
+    const upload = async () => {
         if (nameTitle.includes(title) === false) {
             if (selectfile != null && title.length !== 0) {
                 let formData = new FormData();
@@ -56,6 +56,7 @@ export default function AddImg() {
             window.location.reload(false);
         } else {
             alert("มีรายการนี้แล้ว!!");
+            window.location.reload(false);
         }
 
         // window.location.reload(false);
@@ -139,6 +140,9 @@ export default function AddImg() {
                             <h6 style={{ color: 'blue' }}><b> * Image Name <input type='text' placeholder='Enter Name' onChange={(event) => {
                                 setTitle(event.target.value);
                             }} /></b></h6>
+                            {/* <div className="ml-5">
+                                <p style={{ color: 'red' }}> *Except mark (, . ' ') </p>
+                            </div> */}
                         </div>
 
                         <div className='form-group' >
