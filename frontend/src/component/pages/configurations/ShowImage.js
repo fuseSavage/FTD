@@ -11,12 +11,18 @@ export default function ShowImage() {
     // const [changeTitle, setChangeTitle] = useState('')
     const [selectfile, setSelectFile] = useState()
 
+    // const getApi = 
+    // const path = window.location.pathname.split('/');
+    // path.pop();
+    // path.join('/');
+    // console.log(process.env.PORT)
+    // ?name=${name}`
     useEffect(() => {
         async function fetchData() {
             setGetName(name)
             // setChangeTitle(name)
 
-            Axios.get(`http://localhost:3001/getImage/:name?name=${name}`).then((response) => {
+            Axios.get(`http://localhost:3001/getImage?name=${name}`).then((response) => {
                 setImage(response.data)
                 // console.log(response.data)
             })

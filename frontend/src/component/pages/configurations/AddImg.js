@@ -139,7 +139,7 @@ export default function AddImg() {
                             <h5><b>Add Image</b></h5>
                             <h6 style={{ color: 'blue' }}><b> * Image Name <input type='text' placeholder='Enter Name' onChange={(event) => {
                                 setTitle(event.target.value);
-                            }} /></b></h6>
+                            }} required /></b></h6>
                             {/* <div className="ml-5">
                                 <p style={{ color: 'red' }}> *Except mark (, . ' ') </p>
                             </div> */}

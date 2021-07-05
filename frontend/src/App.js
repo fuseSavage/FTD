@@ -8,7 +8,6 @@ import Drawers from './component/layouts/Drawers';
 import Home from './component/pages/Home';
 import Footer from './component/layouts/Footer';
 import { AppBar, IconButton, Toolbar, Typography, Drawer, Hidden } from '@material-ui/core';
-import { Button } from 'react-bootstrap';
 import { BiMenu } from 'react-icons/bi'
 import CssBaseline from '@material-ui/core/CssBaseline';
 import RDH_RO from './component/pages/RDH_RO';
@@ -23,6 +22,7 @@ import L_Slider_HGA from './component/pages/L_Slider_HGA';
 import AddImg from './component/pages/configurations/AddImg';
 import Setting_SW_FW from './component/pages/configurations/Setting_SW_FW';
 import ShowImage from './component/pages/configurations/ShowImage';
+import { Button, Card, Col, Form, Table } from 'react-bootstrap';
 // import axios from 'axios';
 
 const drawerWidth = 240;
@@ -63,8 +63,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function App(props) {
 
+
+function App(props) {
   const { window } = props;
   const classes = useStyles();
   const theme = useTheme();

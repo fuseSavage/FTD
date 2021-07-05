@@ -6,10 +6,49 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const multer = require('multer');
 const path = require('path');
+const oracledb = require("oracledb");
+
+
+const cookieSession = require('cookie-session');
+const bodyParser = require('body-parser');
+
+
+
 // import AddImg from '../frontend/public';
 // const { v4: uuidv4 } = require('uuid');
 
+const db = mysql.createConnection({
+    user: "root",
+    host: "localhost",
+    password: "root11549",
+    database: "demoautodb",
+});
+const imgdb = mysql.createConnection({
+    user: "root",
+    host: "localhost",
+    password: "root11549",
+    database: "images",
+});
+const dblogin = mysql.createConnection({
+    user: "root",
+    host: "localhost",
+    password: "root11549",
+    database: "employees"
+});
+const dataflow = mysql.createConnection({
+    user: "root",
+    host: "localhost",
+    password: "root11549",
+    database: "insertdata"
+})
+
 const app = express();
+
+app.use(cookieSession({
+    name: 'session',
+    keys: ['key1', 'key2'],
+    maxAge: 3600 * 1000 // 1hr
+}))
 app.use(cookieParser());
 app.use(cors({
     methods: ["GET", "POST", "DELETE"],
@@ -41,26 +80,34 @@ const upload = multer({
     }
 });
 
-const db = mysql.createConnection({
-    user: "root",
-    host: "localhost",
-    password: "root11549",
-    database: "demoautodb",
-});
 
-const imgdb = mysql.createConnection({
-    user: "root",
-    host: "localhost",
-    password: "root11549",
-    database: "images",
-});
 
-const db2 = mysql.createConnection({
-    user: "root",
-    host: "localhost",
-    password: "root11549",
-    database: "flowdb",
-});
+// Connect Database Oracle//
+// const HGSA_ODS = `(DESCRIPTION=(ADDRESS_LIST =
+//         (ADDRESS = (PROTOCOL = TCP)(HOST = tkhpods.kor.thai.seagate.com)(PORT = 1521)))
+//         (CONNECT_DATA =(SID = ods)(SERVICE_NAME = ods.kor.thai.seagate.com)
+//                 (SERVER = DEDICATED)))`
+
+// const orldb = oracledb.getConnection({
+//     user: "rhtwebacc",
+//     password: "rhtseagate",
+//     connectString: HGSA_ODS
+// },
+//     function (err, connection) {
+//         if (err) {
+//             console.error(err); return;
+//         }
+//         // connection.execute("SELECT sysdate from dual",
+//         // connection.execute("SELECT * from ETSA_TH_BIN ",
+//         // connection.execute("SELECT table_name, owner FROM ETSA_TH_BIN ORDER BY owner, table_name ",
+//         connection.execute("SHOW TABLES",
+//             function (err, result) {
+//                 if (err) {
+//                     console.error(err); return;
+//                 }
+//                 console.log(result.rows);
+//             });
+//     });
 
 // var Service = require('node-windows').Service;
 // var svc = new Service({
@@ -73,19 +120,7 @@ const db2 = mysql.createConnection({
 // svc.install()
 
 
-const dblogin = mysql.createConnection({
-    user: "root",
-    host: "localhost",
-    password: "root11549",
-    database: "employees"
-});
 
-const dataflow = mysql.createConnection({
-    user: "root",
-    host: "localhost",
-    password: "root11549",
-    database: "insertdata"
-})
 
 app.get('/demoauto', (req, res) => {
     db.query("SELECT * FROM sql_for_auto_web_07113", (err, result) => {
@@ -104,10 +139,13 @@ app.get('/select', (req, res) => {
         (err, result) => {
             if (err) {
                 console.log(err);
+                
             } else {
                 res.send(result);
+                // res.redirect('/')
             }
         })
+        
 })
 
 //AMA
@@ -162,16 +200,6 @@ app.post('/pushflow', (req, res) => {
             })
     }
 })
-app.get('/check-title', (req, res) => {
-    imgdb.query(`SHOW TABLES`, (err, result) => {
-        if (err) {
-            console.log('err', err)
-        } else {
-            res.send(result)
-        }
-    })
-})
-
 
 // AND password = "${password}"
 
@@ -189,7 +217,7 @@ app.post('/login', (req, res) => {
                     httpOnly: true,
                     maxAge: 24 * 60 * 60 * 1000 //1 day
                 })
-                console.log(result)
+                // console.log(result)
                 res.send(result);
             } else {
                 res.send({ message: "uid/password is invalid!" });
@@ -247,6 +275,7 @@ app.post('/sw-fw', (req, res) => {
 
 app.get('/getswfw', (req, res) => {
     db.query(`SELECT * FROM sw_fw`,
+    // orldb.query(`select * from ETSA_TH_BIN `,
         (err, result) => {
             if (err) {
                 console.log(err);
@@ -266,8 +295,19 @@ app.delete('/delswfw', (req, res) => {
                 console.log(err)
             } else {
                 res.send({ message: 'successfully deleted' })
+                console.log(result)
             }
         })
+})
+
+app.get('/check-title', (req, res) => {
+    imgdb.query(`SHOW TABLES`, (err, result) => {
+        if (err) {
+            console.log('err', err)
+        } else {
+            res.send(result)
+        }
+    })
 })
 
 app.delete('/deleteTitle', (req, res) => {
@@ -317,21 +357,21 @@ app.post('/uploadimg', upload.array('imagesArray'), (req, res) => {
     })
 })
 
-app.get('/getImage/:name', (req, res) => {
-    const name = req.query.name;
-
-    if (name != undefined) {
-        // console.log(name)
-        imgdb.query(`SELECT * FROM ${name}`, (err, result) => {
+app.get('/getImage', (req, res) => {
+    const title = req.query.name;
+    if (title != undefined) {
+        imgdb.query(`SELECT * FROM ${title}`, (err, result) => {
             if (err) {
                 console.log(err);
             } else {
                 res.send(result);
-                
+                // res.sendFile(path.resolve(__dirname, `./uploads/images/${req.params.name}`));
+                // console.log(api)
+                // console.log(req.params.name)
             }
         })
     }
-    // res.sendFile(path.resolve(__dirname, `./uploads/images/${req.params.name}`));
+
 })
 
 app.delete('/deleteItem', (req, res) => {
@@ -350,7 +390,7 @@ app.delete('/deleteItem', (req, res) => {
     })
 })
 
-app.post('/changeImage', upload.array('imagesArr'), (req, res) => { 
+app.post('/changeImage', upload.array('imagesArr'), (req, res) => {
     const title = req.query.title;
     const images = req.files;
     let reqFiles = [];
@@ -369,7 +409,7 @@ app.post('/changeImage', upload.array('imagesArr'), (req, res) => {
     }
 
 })
- 
+
 app.listen('3001', () => {
     console.log('server is running on port 3001');
 })

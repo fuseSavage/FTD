@@ -23,7 +23,7 @@ export default function Setting_SW_FW(props) {
                     }
                 })
         } else {
-            alert('Please complete the information.')
+            alert('Please Enter SW and/or FW')
         }
     }
 
@@ -35,8 +35,6 @@ export default function Setting_SW_FW(props) {
         }
         fetchData();
     }, [])
-
-    console.log(swfw)
 
     const delswfw = async (id) => {
         await Axios.delete(`http://localhost:3001/delswfw?id=${id}`).then((response) => {

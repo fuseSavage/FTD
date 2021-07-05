@@ -9,6 +9,7 @@ import { TiInputChecked } from 'react-icons/ti';
 import Parser from 'html-react-parser';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import Search from '../layouts/Search';
 
 
 
@@ -187,7 +188,7 @@ export default function RDH_RO(props) {
     //End HGA shipment detail//
 
 
-    const [action, setAction] = useState();
+    const [action, setAction] = useState(false);
     let sum_qty = 0;
     let no_Bo = 0;
     let valuesurface = 0;
@@ -214,10 +215,11 @@ export default function RDH_RO(props) {
                 newValues.push(selectdataList[i])
             }
         }
-        setAction(
-            <TabResult />
-        )
-        console.log('new', newValues)
+        setAction(true);
+        // setAction(
+        //     <TabResult />
+        // )
+        // console.log('new', newValues)
     }
 
     const datainput = [{
@@ -242,7 +244,9 @@ export default function RDH_RO(props) {
         console.log(inputFieldQTY)
         console.log('datainput', datainput)
     }
-
+    useEffect(() => {
+        
+    })
     const TabResult = () => {
         return (
             <div>
@@ -354,8 +358,10 @@ export default function RDH_RO(props) {
                                 <thead style={{ backgroundColor: '#FD980A' }} >
                                     <th>No</th>
                                     <th>BO</th>
-                                    <th>Tab</th>
-
+                                    <th>TAB</th>
+                                    <th>TSR</th>
+                                    <th>BO Qty</th>
+                                    <th>Format Media.</th>
                                 </thead>
                             </Table>
                         </div>
@@ -570,7 +576,7 @@ export default function RDH_RO(props) {
                     ><Button variant="outline-warning" style={{ marginTop: '20px' }}>Test</Button></Link> */}
 
                         <div>
-                            {action}
+                        <TabResult />
                         </div>
                         {/* <Button variant="outline-warning" style={{ marginTop: '20px' }} onClick={test}>Test</Button> */}
                     </div>

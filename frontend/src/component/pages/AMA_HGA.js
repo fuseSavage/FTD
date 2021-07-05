@@ -1,5 +1,5 @@
 import { Container } from '@material-ui/core'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Axios from 'axios';
 import { Button, Card, Col, Form, Table } from 'react-bootstrap';
 import { TiInputChecked } from 'react-icons/ti';
@@ -16,48 +16,61 @@ export default function AMA_SDET(props) {
     const [value, setValue] = useState('');
     let sum_qty = 0;
 
-    const getSelect = () => {
-        if (datalist) {
-            Axios.get(`http://localhost:3001/ama?EXP_ID=${EXP_ID}`).then((response) => {
-                setSelectdataList(response.data);
+    // const getSelect = () => {
+    //     if (datalist) {
+    //         Axios.get(`http://localhost:3001/ama?EXP_ID=${EXP_ID}`).then((response) => {
+    //             setSelectdataList(response.data);
+    //         })
+    //             .catch((err) => {
+    //                 throw err;
+    //             })
+    //     } else {
+    //         window.location.reload(false);
+    //     }
+    // }
+    // console.log('1111', selectdataList)
+    // if (selectdataList.length != 0) {
 
-                if (selectdataList) {
-                    const valuesqty = [...inputFieldQTY];
-                    const Nqty = inputFieldQTY.map(Number);
-                    for (let i = 0; i < selectdataList.length; i++) {
-                        valuesqty[i] = selectdataList[i].SDET_QTY;
-                        setinputFieldQTY(valuesqty);
-                        // console.log(selectdataList[i].SDET_QTY)
+    // }
+    
+    useEffect(() => {
+        // async function fetchData() {
+        //     console.log('cj 555555', selectdataList)
+        //     // const valuesqty = [...inputFieldQTY];
+        //     // const Nqty = inputFieldQTY.map(Number);
+        //     // for (let i = 0; i < selectdataList.length; i++) {
+        //     //     valuesqty[i] = selectdataList[i].SDET_QTY;
+        //     //     setinputFieldQTY(valuesqty);
+        //     //     // console.log(selectdataList[i].SDET_QTY)
 
-                        if (Nqty[i] > 1) {
-                            sum_qty = sum_qty + Nqty[i];
-                        }
-                    }
+        //     //     if (Nqty[i] > 1) {
+        //     //         sum_qty = sum_qty + Nqty[i];
+        //     //     }
+        //     // }
 
-                    selectdataList.forEach((e) => {
-                        if (e.PARM_HGA_TAB === "Down-00") {
-                            setProduct(e.PRODUCTFAMILY)
-                            setTabDN('Dn')
-                            setHGADN(e.HGA_PART_NUM)
-                            setL_SliderDN(e.L_SLD_PART_NUM)
-                            setTGADN(e.HGA_SUSPENSION_PN)
-                        }
-                        if (e.PARM_HGA_TAB === "Up-01") {
-                            setProduct(e.PRODUCTFAMILY)
-                            setTabUP('Up')
-                            setHGAUP(e.HGA_PART_NUM)
-                            setL_SliderUP(e.L_SLD_PART_NUM)
-                            setTGAUP(e.HGA_SUSPENSION_PN)
-                        }
-                    });
-                }
-            })
-        } else {
-            window.location.reload(false);
-        }
+        //     await selectdataList.forEach((e) => {
+        //         if (e.PARM_HGA_TAB === "Down-00") {
+        //             setProduct(e.PRODUCTFAMILY)
+        //             setTabDN('Dn')
+        //             setHGADN(e.HGA_PART_NUM)
+        //             setL_SliderDN(e.L_SLD_PART_NUM)
+        //             setTGADN(e.HGA_SUSPENSION_PN)
+        //         }
+        //         if (e.PARM_HGA_TAB === "Up-01") {
+        //             setProduct(e.PRODUCTFAMILY)
+        //             setTabUP('Up')
+        //             setHGAUP(e.HGA_PART_NUM)
+        //             setL_SliderUP(e.L_SLD_PART_NUM)
+        //             setTGAUP(e.HGA_SUSPENSION_PN)
+        //         }
+        //     });
 
-        console.log(selectdataList)
-    }
+        // }
+        // fetchData();
+        async function getSelect() {
+            console.log(555555)
+        } getSelect();
+    }, [])
 
     //Start table Top Bin Detail//
     const [tabdn, setTabDN] = useState('');
@@ -193,7 +206,7 @@ export default function AMA_SDET(props) {
                                             </Form.Group>
                                         </Form>
                                     </Card.Body>
-                                    <Button variant="outline-success" onClick={getSelect}>Success</Button>
+                                    <Button variant="outline-success" onClick={useEffect.getSelect}>Success</Button>
                                 </Card>
                             </div>
                         </Col>
@@ -316,7 +329,7 @@ export default function AMA_SDET(props) {
                                     <th>Group</th>
                                     <th>L_Slider_from SDET_BO</th>
                                     <th>SDET_Sort
-                                    <input type="text" onChange={event => {
+                                        <input type="text" onChange={event => {
                                             handleInputAllSort(event)
                                         }} style={{ width: '60px' }} />
                                         <a type='button'><TiInputChecked size={20} onClick={useClickSort} /></a>
@@ -329,7 +342,7 @@ export default function AMA_SDET(props) {
                                         <a type='button'><TiInputChecked size={20} onClick={useClickQTY} /></a>
                                     </th>
                                     <th>HGA_WO_file
-                                    <input type="number" onChange={event => {
+                                        <input type="number" onChange={event => {
                                             handleInputAllWOF(event)
                                         }} style={{ width: '60px' }} />
                                         <a type='button' onClick={useClickWOF} ><TiInputChecked size={20} /></a>
@@ -400,7 +413,7 @@ export default function AMA_SDET(props) {
 
                         <div style={{ marginTop: '20px' }}>
                             <p>Set Per surface :
-                        <input type="number" value={persurface} onChange={(event) => {
+                                <input type="number" value={persurface} onChange={(event) => {
                                     setPersurface(event.target.value);
                                 }} style={{ width: '100px' }} />
                             </p>
@@ -416,7 +429,7 @@ export default function AMA_SDET(props) {
                             </p>
 
                             <p>ทำการ Test บน เครื่อง
-                        <input type="text" value={testON} onChange={(event) => {
+                                <input type="text" value={testON} onChange={(event) => {
                                     setTestON(event.target.value);
                                 }} style={{ width: '350px' }} />
                             </p>
