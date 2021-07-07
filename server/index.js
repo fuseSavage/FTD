@@ -5,12 +5,10 @@ const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const multer = require('multer');
-const path = require('path');
-const oracledb = require("oracledb");
+// const path = require('path');
+// const oracledb = require("oracledb");
 
-
-const cookieSession = require('cookie-session');
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 
 
 
@@ -43,12 +41,6 @@ const dataflow = mysql.createConnection({
 })
 
 const app = express();
-
-app.use(cookieSession({
-    name: 'session',
-    keys: ['key1', 'key2'],
-    maxAge: 3600 * 1000 // 1hr
-}))
 app.use(cookieParser());
 app.use(cors({
     methods: ["GET", "POST", "DELETE"],
@@ -145,9 +137,7 @@ app.get('/select', (req, res) => {
                 // res.redirect('/')
             }
         })
-        
 })
-
 //AMA
 app.get('/ama', (req, res) => {
     const exp_id = req.query.EXP_ID;
@@ -237,7 +227,7 @@ app.get('/user', async (req, res) => {
                 message: 'unauthenticated'
             })
         }
-        const user = await dblogin.query(`SELECT * FROM employees WHERE id = "${claims._id}"`,
+        const user = await dblogin.query(`SELECT id, uid, name FROM employees WHERE id = "${claims._id}"`,
             (err, result) => {
                 if (err) {
                     console.log(err);
@@ -278,7 +268,7 @@ app.get('/getswfw', (req, res) => {
     // orldb.query(`select * from ETSA_TH_BIN `,
         (err, result) => {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.send(err);
             } else {
                 res.send(result);
@@ -295,7 +285,7 @@ app.delete('/delswfw', (req, res) => {
                 console.log(err)
             } else {
                 res.send({ message: 'successfully deleted' })
-                console.log(result)
+                // console.log(result)
             }
         })
 })
@@ -357,8 +347,11 @@ app.post('/uploadimg', upload.array('imagesArray'), (req, res) => {
     })
 })
 
-app.get('/getImage', (req, res) => {
-    const title = req.query.name;
+app.get('/getImage/:name', (req, res) => {
+    const title = req.query.title;
+
+    // res.sendFile(path.resolve(__dirname, `./uploads/images/${req.params.name}`));
+    // console.log(title)
     if (title != undefined) {
         imgdb.query(`SELECT * FROM ${title}`, (err, result) => {
             if (err) {
@@ -366,8 +359,20 @@ app.get('/getImage', (req, res) => {
             } else {
                 res.send(result);
                 // res.sendFile(path.resolve(__dirname, `./uploads/images/${req.params.name}`));
-                // console.log(api)
+                // const images = JSON.stringify(result.length);
+                // console.log(path.resolve(__dirname, `./uploads/images/${req.params.name}`));
+                // console.log(path.resolve(__dirname, `./uploads/images/1624868712308-Before.png`));
+                // res.sendFile(path.resolve(__dirname, `./uploads/images/1624868712308-Before.png`));
+
+                // for(let i=0; i<images; i++) {
+                //     // res.sendFile(path.resolve(__dirname, `./uploads/images/${JSON.stringify(result[i].images)}`));
+                //     // res.sendFile(path.resolve(__dirname, `./uploads/images/1624868712317-After fdd.png`));
+                //     // console.log(JSON.stringify(result[i].images))
+                //     // console.log(path.resolve(__dirname, `./uploads/images/${JSON.stringify(result[i].images)}`));
+                // }
                 // console.log(req.params.name)
+                // console.log(JSON.stringify(result.length));
+                
             }
         })
     }

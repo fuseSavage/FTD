@@ -36,6 +36,10 @@ export default function Setting_SW_FW(props) {
         fetchData();
     }, [])
 
+
+
+    
+
     const delswfw = async (id) => {
         await Axios.delete(`http://localhost:3001/delswfw?id=${id}`).then((response) => {
             window.location.reload(false);

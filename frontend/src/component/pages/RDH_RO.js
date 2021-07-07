@@ -9,7 +9,7 @@ import { TiInputChecked } from 'react-icons/ti';
 import Parser from 'html-react-parser';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import Search from '../layouts/Search';
+// import Search from '../layouts/Search';
 
 
 
@@ -65,7 +65,7 @@ export default function RDH_RO(props) {
     //     fetchData();
     // }, [])
 
-    
+
     const [type, setTYPE] = useState("PRIME BUILD");
     const handleSelectType = (e) => {
         setTYPE(e.target.value)
@@ -132,17 +132,13 @@ export default function RDH_RO(props) {
     const useClickWOF = () => {
         setinputFieldWOF(allWOF);
     }
-    const set_0_WOF = () => {
-        setinputFieldWOF(allWOF_0);
-    }
-
     //Start HGA shipment detail//
     const [inputFields1, setinputFieldS1] = useState([])
-    const handleInputS1 = (index, event) => {
-        const values1 = [...inputFields1];
-        values1[index] = event.target.value;
-        setinputFieldS1(values1);
-    };
+    // const handleInputS1 = (index, event) => {
+    //     const values1 = [...inputFields1];
+    //     values1[index] = event.target.value;
+    //     setinputFieldS1(values1);
+    // };
     const [inputFields2, setinputFieldS2] = useState([])
     const handleInputS2 = (index, event) => {
         const values = [...inputFields2];
@@ -188,11 +184,13 @@ export default function RDH_RO(props) {
     //End HGA shipment detail//
 
 
-    const [action, setAction] = useState(false);
+    const [action, setAction] = useState();
     let sum_qty = 0;
     let no_Bo = 0;
     let valuesurface = 0;
     let newValues = [];
+
+
 
     const preview = () => {
         setNewmedia(media)
@@ -215,12 +213,14 @@ export default function RDH_RO(props) {
                 newValues.push(selectdataList[i])
             }
         }
-        setAction(true);
-        // setAction(
-        //     <TabResult />
-        // )
+        // setAction(true);
+        setAction(
+            <TabResult />
+        )
         // console.log('new', newValues)
     }
+
+
 
     const datainput = [{
         qty: inputFieldQTY,
@@ -232,21 +232,7 @@ export default function RDH_RO(props) {
         testON: testON,
         media: media,
     }]
-    const send = () => {
-        console.log(inputFields1)
-        console.log(inputFields2)
-        console.log(inputFields3)
-        console.log(inputFields4)
-        console.log(inputFields5)
-        console.log(inputFields6)
-        console.log(inputFields7)
-        console.log(inputFields8)
-        console.log(inputFieldQTY)
-        console.log('datainput', datainput)
-    }
-    useEffect(() => {
-        
-    })
+
     const TabResult = () => {
         return (
             <div>
@@ -279,7 +265,7 @@ export default function RDH_RO(props) {
                             </tbody>
                         </Table>
 
-                        <div>
+                        {/* <div>
                             <h6><b>HGA shipment detail</b></h6>
                             <Table hover responsive bordered style={{ textAlign: 'center' }} >
                                 <thead style={{ backgroundColor: '#FD980A' }}>
@@ -299,10 +285,7 @@ export default function RDH_RO(props) {
                                             <tr>
                                                 <td>{val.HGA_BO}</td>
                                                 <td><input type="number" value={inputFields1[index]} onChange={event => {
-                                                    handleInputS1(
-                                                        index,
-                                                        event
-                                                    );
+                                                    setinputFieldS1(arr => [...arr, event.target.value]);
                                                 }} style={{ width: '60px' }} /></td>
                                                 <td><input type="number" value={inputFields2[index]} onChange={event => {
                                                     handleInputS2(
@@ -351,9 +334,9 @@ export default function RDH_RO(props) {
                                     })}
                                 </tbody>
                             </Table>
-                        </div>
+                        </div> */}
 
-                        <div>
+                        {/* <div>
                             <Table>
                                 <thead style={{ backgroundColor: '#FD980A' }} >
                                     <th>No</th>
@@ -364,8 +347,8 @@ export default function RDH_RO(props) {
                                     <th>Format Media.</th>
                                 </thead>
                             </Table>
-                        </div>
-                        <Button variant="outline-warning" onClick={send} style={{ marginTop: '20px' }}>Send</Button>
+                        </div> */}
+                        <Button variant="outline-warning" style={{ marginTop: '20px' }}>Send</Button>
                     </Container>
                 ) : null}
             </div>
@@ -453,7 +436,6 @@ export default function RDH_RO(props) {
                                             handleInputAllWOF(event)
                                         }} style={{ width: '60px' }} />
                                         <a type='button' onClick={useClickWOF} ><TiInputChecked size={20} /></a>
-                                        <a type='button' onClick={set_0_WOF} ><u>set 0</u></a>
                                     </th>
                                     <th>TMWI_ET</th>
                                     <th>Build_Num_ET</th>
@@ -576,7 +558,7 @@ export default function RDH_RO(props) {
                     ><Button variant="outline-warning" style={{ marginTop: '20px' }}>Test</Button></Link> */}
 
                         <div>
-                        <TabResult />
+                            {action}
                         </div>
                         {/* <Button variant="outline-warning" style={{ marginTop: '20px' }} onClick={test}>Test</Button> */}
                     </div>

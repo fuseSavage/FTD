@@ -48,7 +48,7 @@ export default function AddImg() {
                     .then(res => {
                     })
                     .catch(error => {
-                        console.error(error);
+                        throw error;
                     })
             } else {
                 alert("Enter Image Name And Select Image!!");
@@ -95,7 +95,7 @@ export default function AddImg() {
                                 <thead>
                                     <th>No</th>
                                     <th>Name</th>
-                                    <th>View</th>
+                                    <th>Edit</th>
                                     <th>Delete</th>
                                 </thead>
                                 <tbody>

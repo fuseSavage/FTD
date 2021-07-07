@@ -53,6 +53,7 @@ export default function L_Slider_SDET(props) {
                 }
             })
         } else {
+            alert('Please login')
             window.location.reload(false);
         }
 

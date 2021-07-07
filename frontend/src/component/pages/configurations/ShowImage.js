@@ -8,23 +8,19 @@ export default function ShowImage() {
     const name = useLocation().state.name;
     const [getName, setGetName] = useState()
     const [image, setImage] = useState()
-    // const [changeTitle, setChangeTitle] = useState('')
     const [selectfile, setSelectFile] = useState()
 
-    // const getApi = 
-    // const path = window.location.pathname.split('/');
-    // path.pop();
-    // path.join('/');
-    // console.log(process.env.PORT)
-    // ?name=${name}`
     useEffect(() => {
         async function fetchData() {
             setGetName(name)
-            // setChangeTitle(name)
 
-            Axios.get(`http://localhost:3001/getImage?name=${name}`).then((response) => {
+            Axios.get(`http://localhost:3001/getImage`, {
+                params: {
+                    title: name,
+                }
+            }).then((response) => {
                 setImage(response.data)
-                // console.log(response.data)
+                console.log(response.data)
             })
         }
         fetchData();
@@ -73,6 +69,8 @@ export default function ShowImage() {
         window.location.reload(false);
     }
 
+ 
+
     return (
         <div className="container mt-5">
             <div className="row text-center">
@@ -91,7 +89,7 @@ export default function ShowImage() {
                 <div className="col-md-8">
                     <h4>Image List</h4>
                     {image != null ? (
-                        <Table responsive hover bordered style={{ textAlign: 'center' }} >
+                        <Table hover bordered style={{ textAlign: 'center' }} >
                             <thead>
                                 <th>No</th>
                                 <th>Image</th>
@@ -102,9 +100,10 @@ export default function ShowImage() {
                                     return (
                                         <tr key={index}>
                                             <td>{index + 1}</td>
-                                            {/* <td>{val.images}</td> */}
                                             <td>
-                                                <img src="https://ik.imagekit.io/ikmedia/women-dress-2.jpg" width="150" height="auto" />
+                                                <a href={`http://localhost:3001/showImages/${(encodeURIComponent(val.images.trim()))}`}>
+                                                    <img src={`http://localhost:3001/showImages/${(encodeURIComponent(val.images.trim()))}`} width="350" height="auto" />
+                                                </a>
                                             </td>
                                             <td>
                                                 <button className='btn btn-danger' onClick={(event) => {
@@ -118,15 +117,6 @@ export default function ShowImage() {
                             </tbody>
                         </Table>
                     ) : null}
-                    {/* <img src="http://localhost:3001/getImage/1624529335248-Before.png" width="400" height="auto" /> */}
-                    {/* <div className="mt-5">
-                        <h5>* Change Name :
-                            <input type='text' value={changeTitle} onChange={(e) => {
-                                setChangeTitle(e.target.value)
-                            }} />
-                        </h5>
-                        <button className='btn btn-primary' onClick={submitTitle} >Submit</button>
-                    </div> */}
                     <div className='form-group mt-5' >
                         <h5>* Add Image : </h5>
                         <input type='file' multiple className='form-control' onChange={(e) => handleselectImg(e)} ></input>
